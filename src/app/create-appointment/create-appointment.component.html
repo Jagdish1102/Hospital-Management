@@ -1,0 +1,81 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <button class="btn btn-light" (click)="goBack()">← Back</button>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Book an Appointment</h2>
+
+  <form
+    (ngSubmit)="onSubmit()"
+    #appointmentForm="ngForm"
+    class="p-4 border rounded bg-light shadow-sm"
+  >
+    <!-- Name -->
+    <div class="mb-3">
+      <label for="name" class="form-label">Full Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        class="form-control"
+        required
+        [(ngModel)]="appointment.name"
+        placeholder="Enter your full name"
+      />
+    </div>
+
+    <!-- Age -->
+    <div class="mb-3">
+      <label for="age" class="form-label">Age</label>
+      <input
+        type="number"
+        id="age"
+        name="age"
+        class="form-control"
+        required
+        [(ngModel)]="appointment.age"
+        placeholder="Enter your age"
+      />
+    </div>
+
+    <!-- Symptoms -->
+    <div class="mb-3">
+      <label for="symptoms" class="form-label">symtomps</label>
+      <textarea
+        id="symtomps"
+        name="symtomps"
+        class="form-control"
+        required
+        rows="3"
+        [(ngModel)]="appointment.symtomps"
+        placeholder="Describe your symptoms"
+      ></textarea>
+    </div>
+
+    <!-- Contact Number -->
+    <div class="mb-3">
+      <label for="number" class="form-label">Contact Number</label>
+      <input
+        type="tel"
+        id="number"
+        name="number"
+        class="form-control"
+        required
+        pattern="[0-9]{10}"
+        [(ngModel)]="appointment.number"
+        placeholder="Enter your 10-digit mobile number"
+      />
+    </div>
+    <div class="text-center">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!appointmentForm.form.valid"
+      >
+        Submit Appointment
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,30 @@
+<div class="card mt-4">
+  <div class="card-header bg-primary text-white">
+    <h4>Patients Under Treatment</h4>
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Symptoms</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let patient of patients">
+          <td>{{ patient.name }}</td>
+          <td>{{ patient.age }}</td>
+          <td>{{ patient.symtomps }}</td>
+          <td>
+            <span class="badge bg-info">{{ patient.status }}</span>
+          </td>
+        </tr>
+        <tr *ngIf="patients.length === 0">
+          <td colspan="4" class="text-center text-muted">No patients yet.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediCare Hospital - Quality Healthcare Services</title>
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      /* Custom styles */
+      .navbar {
+        padding: 15px 0;
+        transition: all 0.3s;
+      }
+
+      .navbar.scrolled {
+        background-color: #0d6efd !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 10px 0;
+      }
+
+      .hero-section {
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+          url("https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80");
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 150px 0;
+        margin-top: 56px; /* To account for fixed navbar */
+      }
+
+      .hero-content {
+        max-width: 600px;
+      }
+
+      .department-card {
+        transition: all 0.3s ease;
+        margin-bottom: 30px;
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .department-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .department-img {
+        height: 250px;
+        object-fit: cover;
+      }
+
+      .department-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        color: #0d6efd;
+      }
+
+      .icon-box {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        background: rgba(13, 110, 253, 0.1);
+      }
+
+      .feature-icon {
+        font-size: 2rem;
+        color: #0d6efd;
+      }
+
+      .login-btn {
+        min-width: 120px;
+        margin-left: 10px;
+      }
+
+      .department-features {
+        list-style-type: none;
+        padding-left: 0;
+      }
+
+      .department-features li {
+        padding: 5px 0;
+        position: relative;
+        padding-left: 25px;
+      }
+
+      .department-features li:before {
+        content: "\f00c";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        position: absolute;
+        left: 0;
+        color: #0d6efd;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Fixed Top Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img
+            src="assets\sign.png"
+            alt="MediCare Hospital Logo"
+            class="me-2"
+            height="40"
+          />
+          <span class="fw-bold">Kanak Hospital</span>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="departmentsDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+              >
+                Departments
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="#cardiology">Cardiology</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#neurology">Neurology</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#pediatrics">Pediatrics</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#orthopedics">Orthopedics</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#emergency">Emergency</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Doctors</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+            <li class="nav-item ms-lg-2">
+              <a
+                href="#"
+                class="btn btn-light login-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#doctorLoginModal"
+              >
+                <i class="fas fa-user-md me-2"></i>Doctor Login
+              </a>
+            </li>
+            <li class="nav-item ms-lg-2">
+              <a
+                href="#"
+                class="btn btn-outline-light login-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#adminLoginModal"
+              >
+                <i class="fas fa-user-shield me-2"></i>Admin Login
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Doctor Login Modal -->
+    <div
+      class="modal fade"
+      id="doctorLoginModal"
+      tabindex="-1"
+      aria-labelledby="doctorLoginModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="doctorLoginModalLabel">
+              <i class="fas fa-user-md me-2"></i>Doctor Portal
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="doctorEmail" class="form-label"
+                  >Professional Email</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="doctorEmail"
+                  placeholder="doctor@hospital.com"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="doctorPassword" class="form-label">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="doctorPassword"
+                  required
+                />
+                <div class="form-text">
+                  Use your hospital-issued credentials
+                </div>
+              </div>
+              <div class="mb-3 form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="rememberDoctor"
+                />
+                <label class="form-check-label" for="rememberDoctor"
+                  >Remember this device</label
+                >
+              </div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-sign-in-alt me-2"></i>Access Patient Records
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <a href="#" class="text-decoration-none">Forgot password?</a>
+            <a href="#" class="text-decoration-none">New doctor registration</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div
+      class="modal fade"
+      id="adminLoginModal"
+      tabindex="-1"
+      aria-labelledby="adminLoginModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-dark text-white">
+            <h5 class="modal-title" id="adminLoginModalLabel">
+              <i class="fas fa-user-shield me-2"></i>Administrator Portal
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="adminUsername" class="form-label">Admin ID</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="adminUsername"
+                  placeholder="ADM-XXXX"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="adminPassword" class="form-label"
+                  >Security Key</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="adminPassword"
+                  required
+                />
+                <div class="form-text">Two-factor authentication required</div>
+              </div>
+              <div class="mb-3 form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="rememberAdmin"
+                />
+                <label class="form-check-label" for="rememberAdmin"
+                  >Private device</label
+                >
+              </div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-dark">
+                  <i class="fas fa-lock me-2"></i>Access Admin Dashboard
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <p class="text-muted mb-0">
+              Restricted access to authorized personnel only
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="display-4 fw-bold mb-4">Advanced Medical Care for All</h1>
+          <p class="lead mb-4">
+            Award-winning hospital with cutting-edge technology and
+            compassionate care. Our team of 200+ specialists is dedicated to
+            your health and well-being.
+          </p>
+          <div class="d-flex flex-wrap gap-3">
+            <!-- Book Appointment Button -->
+            <a
+              class="btn btn-primary btn-lg px-4"
+            routerLink="/appointment-form" [queryParams]="{from:'home'}"
+            >
+              <i class="fas fa-calendar-check me-2"></i> Book Appointment
+            </a>
+
+            <!-- Our Specialties -->
+            <a href="#departments" class="btn btn-outline-light btn-lg px-4">
+              <i class="fas fa-procedures me-2"></i> Our Specialties
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Info Section -->
+    <section class="py-5 bg-light">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="text-center p-4 bg-white rounded-3 shadow-sm h-100">
+              <div class="icon-box bg-primary bg-opacity-10">
+                <i class="fas fa-phone-alt feature-icon text-primary"></i>
+              </div>
+              <h4 class="mb-3">24/7 Emergency</h4>
+              <p class="mb-0">
+                Immediate care for critical conditions with our trauma
+                specialists available round the clock.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="text-center p-4 bg-white rounded-3 shadow-sm h-100">
+              <div class="icon-box bg-success bg-opacity-10">
+                <i class="fas fa-calendar-alt feature-icon text-success"></i>
+              </div>
+              <h4 class="mb-3">Easy Appointments</h4>
+              <p class="mb-0">
+                Book online, via app, or call us for same-day consultations with
+                our specialists.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="text-center p-4 bg-white rounded-3 shadow-sm h-100">
+              <div class="icon-box bg-info bg-opacity-10">
+                <i class="fas fa-clock feature-icon text-info"></i>
+              </div>
+              <h4 class="mb-3">Flexible Hours</h4>
+              <p class="mb-0">
+                Extended hours including weekends to accommodate your busy
+                schedule.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Departments Section -->
+    <section id="departments" class="py-5">
+      <div class="container">
+        <div class="text-center mb-5">
+          <h2 class="fw-bold display-5">Our Medical Departments</h2>
+          <p class="lead text-muted">
+            Comprehensive care across all major medical specialties with
+            state-of-the-art facilities
+          </p>
+        </div>
+        <div class="row g-4">
+          <!-- Cardiology -->
+          <div id="cardiology" class="col-lg-6">
+            <div class="card department-card h-100">
+              <img
+                src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                class="card-img-top department-img"
+                alt="Cardiology"
+              />
+              <div class="card-body">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <h3 class="card-title mb-0">
+                    <i class="fas fa-heartbeat department-icon"></i> Cardiology
+                  </h3>
+                  <span class="badge bg-danger">24/7 Emergency</span>
+                </div>
+                <p class="card-text">
+                  Our Heart Institute provides comprehensive cardiac care with
+                  advanced diagnostic tools and treatment options including:
+                </p>
+                <ul class="department-features">
+                  <li>Non-invasive cardiac imaging</li>
+                  <li>Interventional cardiology</li>
+                  <li>Electrophysiology studies</li>
+                  <li>Cardiac rehabilitation</li>
+                  <li>Preventive cardiology</li>
+                </ul>
+                <div
+                  class="d-flex justify-content-between align-items-center mt-4"
+                >
+                  <a href="#" class="btn btn-primary">
+                    <i class="fas fa-user-md me-2"></i>Meet Our Cardiologists
+                  </a>
+                  <a href="#" class="text-decoration-none"
+                    >View Success Rates →</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Neurology -->
+          <div id="neurology" class="col-lg-6">
+            <div class="card department-card h-100">
+              <img
+                src="https://images.unsplash.com/photo-1579684453423-f84349ef60b0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                class="card-img-top department-img"
+                alt="Neurology"
+              />
+              <div class="card-body">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <h3 class="card-title mb-0">
+                    <i class="fas fa-brain department-icon"></i> Neurology
+                  </h3>
+                  <span class="badge bg-primary">Stroke Center</span>
+                </div>
+                <p class="card-text">
+                  Our Neuroscience Center offers cutting-edge treatment for
+                  complex neurological conditions including:
+                </p>
+                <ul class="department-features">
+                  <li>Comprehensive stroke care</li>
+                  <li>Epilepsy monitoring</li>
+                  <li>Movement disorders clinic</li>
+                  <li>Neurocritical care</li>
+                  <li>Memory and aging program</li>
+                </ul>
+                <div
+                  class="d-flex justify-content-between align-items-center mt-4"
+                >
+                  <a href="#" class="btn btn-primary">
+                    <i class="fas fa-user-md me-2"></i>Meet Our Neurologists
+                  </a>
+                  <a href="#" class="text-decoration-none"
+                    >Research Publications →</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pediatrics -->
+          <div id="pediatrics" class="col-lg-6">
+            <div class="card department-card h-100">
+              <img
+                src="https://images.unsplash.com/photo-1581056771107-24ca5f033842?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                class="card-img-top department-img"
+                alt="Pediatrics"
+              />
+              <div class="card-body">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <h3 class="card-title mb-0">
+                    <i class="fas fa-baby department-icon"></i> Pediatrics
+                  </h3>
+                  <span class="badge bg-success">Child-Friendly</span>
+                </div>
+                <p class="card-text">
+                  Our Children's Hospital provides compassionate care for
+                  infants through adolescents with specialized services:
+                </p>
+                <ul class="department-features">
+                  <li>Neonatal intensive care (NICU)</li>
+                  <li>Pediatric emergency medicine</li>
+                  <li>Child life specialists</li>
+                  <li>Developmental pediatrics</li>
+                  <li>Pediatric surgery</li>
+                </ul>
+                <div
+                  class="d-flex justify-content-between align-items-center mt-4"
+                >
+                  <a href="#" class="btn btn-primary">
+                    <i class="fas fa-user-md me-2"></i>Meet Our Pediatricians
+                  </a>
+                  <a href="#" class="text-decoration-none"
+                    >Child Health Resources →</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Orthopedics -->
+          <div id="orthopedics" class="col-lg-6">
+            <div class="card department-card h-100">
+              <img
+                src="https://images.unsplash.com/photo-1577495508048-b635879b2ef3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                class="card-img-top department-img"
+                alt="Orthopedics"
+              />
+              <div class="card-body">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <h3 class="card-title mb-0">
+                    <i class="fas fa-bone department-icon"></i> Orthopedics
+                  </h3>
+                  <span class="badge bg-warning text-dark"
+                    >Sports Medicine</span
+                  >
+                </div>
+                <p class="card-text">
+                  Our Orthopedic Center specializes in musculoskeletal care with
+                  advanced treatment options including:
+                </p>
+                <ul class="department-features">
+                  <li>Joint replacement surgery</li>
+                  <li>Sports medicine</li>
+                  <li>Spine care</li>
+                  <li>Hand and upper extremity</li>
+                  <li>Physical therapy</li>
+                </ul>
+                <div
+                  class="d-flex justify-content-between align-items-center mt-4"
+                >
+                  <a href="#" class="btn btn-primary">
+                    <i class="fas fa-user-md me-2"></i>Meet Our Orthopedists
+                  </a>
+                  <a href="#" class="text-decoration-none"
+                    >Recovery Programs →</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-5">
+          <a href="#" class="btn btn-outline-primary btn-lg px-4">
+            <i class="fas fa-chevron-circle-down me-2"></i>View All 12
+            Specialized Departments
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="py-5 bg-primary text-white">
+      <div class="container text-center">
+        <h2 class="fw-bold mb-4">Need Immediate Medical Attention?</h2>
+        <p class="lead mb-4">
+          Our emergency department is staffed 24/7 with board-certified
+          emergency physicians and trauma specialists.
+        </p>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+          <a href="tel:+1234567890" class="btn btn-light btn-lg px-4">
+            <i class="fas fa-phone-alt me-2"></i> Emergency: (123) 456-7890
+          </a>
+          <a href="#" class="btn btn-outline-light btn-lg px-4">
+            <i class="fas fa-ambulance me-2"></i> Ambulance Services
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 mb-4">
+            <h5 class="fw-bold mb-3">Kanak Hospital</h5>
+            <p>
+              Providing world-class healthcare services with compassion and
+              innovation since 1995. Accredited by Joint Commission
+              International.
+            </p>
+            <div class="social-icons mt-3">
+              <a href="#" class="text-white me-3"
+                ><i class="fab fa-facebook-f fa-lg"></i
+              ></a>
+              <a href="#" class="text-white me-3"
+                ><i class="fab fa-twitter fa-lg"></i
+              ></a>
+              <a href="#" class="text-white me-3"
+                ><i class="fab fa-instagram fa-lg"></i
+              ></a>
+              <a href="#" class="text-white me-3"
+                ><i class="fab fa-linkedin-in fa-lg"></i
+              ></a>
+              <a href="#" class="text-white"
+                ><i class="fab fa-youtube fa-lg"></i
+              ></a>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-6 mb-4">
+            <h5 class="fw-bold mb-3">Quick Links</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a href="#" class="text-white text-decoration-none">Home</a>
+              </li>
+              <li class="mb-2">
+                <a href="#" class="text-white text-decoration-none">About Us</a>
+              </li>
+              <li class="mb-2">
+                <a href="#" class="text-white text-decoration-none">Services</a>
+              </li>
+              <li class="mb-2">
+                <a href="#" class="text-white text-decoration-none">Doctors</a>
+              </li>
+              <li>
+                <a href="#" class="text-white text-decoration-none">Contact</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5 class="fw-bold mb-3">Medical Departments</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a href="#cardiology" class="text-white text-decoration-none"
+                  >Cardiology</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#neurology" class="text-white text-decoration-none"
+                  >Neurology</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#pediatrics" class="text-white text-decoration-none"
+                  >Pediatrics</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#orthopedics" class="text-white text-decoration-none"
+                  >Orthopedics</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-white text-decoration-none"
+                  >View All Departments</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5 class="fw-bold mb-3">Contact Information</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <i class="fas fa-map-marker-alt me-2"></i> 123 Medical Center
+                Drive, Health City, HC 12345
+              </li>
+              <li class="mb-2">
+                <i class="fas fa-phone me-2"></i> Main: (123) 456-7890
+              </li>
+              <li class="mb-2">
+                <i class="fas fa-envelope me-2"></i>
+                info&#64;medicarehospital.com
+              </li>
+              <li>
+                <i class="fas fa-clock me-2"></i> Open 24/7 - 365 days a year
+              </li>
+            </ul>
+          </div>
+        </div>
+        <hr class="my-4" />
+        <div class="row">
+          <div class="col-md-6 text-center text-md-start">
+            <p class="mb-0">
+              &copy; 2023 MediCare Hospital. All rights reserved.
+            </p>
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+            <p class="mb-0">
+              <a href="#" class="text-white text-decoration-none me-3"
+                >Privacy Policy</a
+              >
+              <a href="#" class="text-white text-decoration-none"
+                >Terms of Service</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Navbar scroll effect
+      window.addEventListener("scroll", function () {
+        const navbar = document.querySelector(".navbar");
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
+    </script>
+  </body>
+</html>

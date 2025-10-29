@@ -1,0 +1,86 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Hospital Admin</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarContent" aria-controls="navbarContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        
+ <li class="nav-item">
+  <a class="nav-link text-white" routerLink="/create-appointment">Book Appointment</a>
+</li>
+
+
+
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="admin">Dashboard</a>
+        </li>
+
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="admin">admin</a>
+        </li> -->
+
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="#">Patients</a>
+        </li> -->
+
+   
+
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="#">Doctors</a>
+        </li> -->
+
+        <!-- <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            Manage
+          </a> -->
+          <!-- <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Departments</a></li>
+            <li><a class="dropdown-item" href="#">Rooms</a></li>
+            <li><a class="dropdown-item" href="#">Medical Records</a></li>
+          </ul>
+        </li> -->
+
+      </ul>
+
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search"
+          placeholder="Search Patients" aria-label="Search" />
+        <button class="btn btn-light" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+<table class="table table-striped" >
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>name</th>
+      <th>age</th>
+      <th>symtomps</th>
+      <th>number</th>
+      <th>Action</th>
+  
+    </tr>
+  </thead>
+ <tbody>
+  <tr *ngFor="let Appointnments of appointnments">
+    <td>{{ Appointnments.id }}</td>
+    <td>{{ Appointnments.name }}</td>
+    <td>{{ Appointnments.age }}</td>
+    <td>{{ Appointnments.symtomps }}</td>
+    <td>{{ Appointnments.number }}</td>
+    <td>
+<button (click)="delete(Appointnments.id)" class="btn btn-denger">Delete</button>
+    </td>
+  </tr>
+</tbody>
+
+</table>
+
