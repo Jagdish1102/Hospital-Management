@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-appointment',
+    standalone: false,
   templateUrl: './create-appointment.component.html',
   styleUrls: ['./create-appointment.component.css']
 })

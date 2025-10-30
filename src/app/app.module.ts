@@ -17,13 +17,12 @@ import { PatientListComponent } from './patient-list/patient-list.component';
 import { PatientFormComponent } from './patient-form/patient-form.component';
 import { PatientDetailsComponent } from './patient-details/patient-details.component';
 import { AppointmentFormComponent } from './appointment-form/appointment-form.component';
-
 @NgModule({
   declarations: [
     AppComponent,
     AdminDashComponent,
     AppointmentComponent,
-   CreateAppointmentComponent,  // ✅ now valid
+    CreateAppointmentComponent,
     HomeComponent,
     DocdashComponent,
     AddPatientComponent,
@@ -32,15 +31,9 @@ import { AppointmentFormComponent } from './appointment-form/appointment-form.co
     PatientListComponent,
     PatientFormComponent,
     PatientDetailsComponent,
-    AppointmentComponent,// ✅ now valid
     AppointmentFormComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule
-  ],
-  bootstrap: [AppComponent]
+  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
