@@ -8,6 +8,7 @@ import { DocdashComponent } from './docdash/docdash.component';
 import { AddPatientComponent } from './add-patient/add-patient.component';
 import { AddPrescriptionComponent } from './add-prescription/add-prescription.component';
 import { AppointmentFormComponent } from './appointment-form/appointment-form.component';
+import { ConsultationComponent } from './consultation/consultation.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -16,10 +17,11 @@ const routes: Routes = [
   { path: 'appointmentlist', component: AppointmentComponent },
   { path: 'create-appointment', component: CreateAppointmentComponent },
   { path: 'docdash', component: DocdashComponent },
+  {path: 'consultation',component:ConsultationComponent},
   { path: 'add-patient', component: AddPatientComponent },
   { path: 'add-prescription', component: AddPrescriptionComponent },
   { path: 'appointment-form', component: AppointmentFormComponent }, // ✅ fixed
-  { path: '**', redirectTo: 'home' }
+  { path: '**', redirectTo: 'home' },
 ];
 
 @NgModule({

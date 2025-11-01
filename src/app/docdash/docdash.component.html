@@ -247,9 +247,10 @@
               <h5 class="mb-0">Recent Appointments</h5>
               <button
                 class="btn btn-sm btn-outline-primary"
-                routerLink="/appointment-form" [queryParams]="{from:'docdash'}"
+                routerLink="/appointment-form"
+                [queryParams]="{ from: 'docdash' }"
               >
-                <i class="fas fa-plus me-1" ></i> New Appointment
+                <i class="fas fa-plus me-1"></i> New Appointment
               </button>
             </div>
             <div class="card-body">
@@ -378,6 +379,11 @@
                       (click)="deletePatient(patient.id)"
                     >
                       <i class="fas fa-trash me-1"></i> Delete
+                    </button>
+                  </td>
+                  <td>
+                    <button class="btn btn-sm btn-primary action-btn ms-2" [routerLink]="['/consultation']"> 
+                      <i class="fas fa-stethoscope me-1"></i> Start Consultation
                     </button>
                   </td>
                 </tr>
