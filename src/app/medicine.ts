@@ -1,5 +1,5 @@
 export class Medicine {
-  id: number =0;
+  medicineId: number =0;
   name: string="";
   description: string="";
   quantity:string="";

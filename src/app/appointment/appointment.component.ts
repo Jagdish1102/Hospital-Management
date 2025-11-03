@@ -41,7 +41,7 @@ export class AppointmentComponent {
 
   manageAppointment(id: number) {
     // Find appointment
-    const index = this.appointnments.findIndex(app => app.id === id);
+    const index = this.appointnments.findIndex(app => app.appointmentId === id);
     if (index > -1) {
       const patient = this.appointnments[index];
 
@@ -56,8 +56,8 @@ export class AppointmentComponent {
     }
   }
 
-deleteAppointment(id: number) {
-    this.appointnments = this.appointnments.filter(app => app.id !== id);
+deleteAppointment(appointmentId: number) {
+    this.appointnments = this.appointnments.filter(app => app.appointmentId !== appointmentId);
   }
 }
 

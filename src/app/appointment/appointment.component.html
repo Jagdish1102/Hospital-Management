@@ -71,13 +71,13 @@
   </thead>
  <tbody>
   <tr *ngFor="let Appointnments of appointnments">
-    <td>{{ Appointnments.id }}</td>
+    <td>{{ Appointnments.appointmentId }}</td>
     <td>{{ Appointnments.name }}</td>
     <td>{{ Appointnments.age }}</td>
     <td>{{ Appointnments.symtomps }}</td>
     <td>{{ Appointnments.number }}</td>
     <td>
-<button (click)="delete(Appointnments.id)" class="btn btn-denger">Delete</button>
+<button (click)="delete(Appointnments.appointmentId)" class="btn btn-denger">Delete</button>
     </td>
   </tr>
 </tbody>

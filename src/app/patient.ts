@@ -1,6 +1,6 @@
 
  export class Patient {
-  id: number = 0;
+  patientId: number = 0;
   name: string = "";
   condition: string = "";      // 👈 matches backend field
   lastVisit: Date = new Date(); // 👈 LocalDateTime in backend → Date in Angular

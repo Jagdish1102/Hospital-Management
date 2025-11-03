@@ -76,7 +76,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let patient of patients">
-      <td>{{ patient.id }}</td>
+      <td>{{ patient.patientId }}</td>
       <td>{{ patient.name }}</td>
       <td>{{ patient.condition }}</td>
       <!-- <td>{{ patient.lastVisit | date : "short" }}</td> -->
@@ -89,7 +89,7 @@
       <td>{{ patient.urgency }}</td>
 
       <td>
-        <button (click)="delete(patient.id)" class="btn btn danger">
+        <button (click)="delete(patient.patientId)" class="btn btn danger">
           delete
         </button>
       </td>

@@ -302,14 +302,14 @@
                       <td class="d-flex gap-5">
                         <button
                           class="btn btn-sm btn-success action-btn"
-                          (click)="manageAppointment(appointment.id)"
+                          (click)="manageAppointment(appointment.appointmentId)"
                         >
                           <i class="fas fa-cog me-1"></i> Manage
                         </button>
 
                         <button
                           class="btn btn-sm btn-danger action-btn"
-                          (click)="deleteAppointment(appointment.id)"
+                          (click)="deleteAppointment(appointment.appointmentId)"
                         >
                           <i class="fas fa-trash me-1"></i> Delete
                         </button>
@@ -376,7 +376,7 @@
                   <td>
                     <button
                       class="btn btn-sm btn-danger action-btn ms-2"
-                      (click)="deletePatient(patient.id)"
+                      (click)="deletePatient(patient.patientId)"
                     >
                       <i class="fas fa-trash me-1"></i> Delete
                     </button>

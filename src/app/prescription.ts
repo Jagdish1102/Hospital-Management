@@ -1,5 +1,5 @@
 export class Prescription {
-  id: number = 0;
+  prescriptionid: number = 0;
   medicineName: string = '';
   dosage: string = '';
   instructions: string = '';
