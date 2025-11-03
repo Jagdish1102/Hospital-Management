@@ -9,7 +9,8 @@ public class Patient {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	@Column(name = "patient_id")
+	private long patientId;
 
 	@Column(name = "name")
 	private String name;
@@ -52,7 +53,7 @@ public class Patient {
 	public Patient(long id, String name, String condition, LocalDateTime lastVisit, String status, String age,
 			String bloodGroup, String prescription, String dose, String fees, String urgency,String symtomps) {
 		super();
-		this.id = id;
+		this.patientId = id;
 		this.name = name;
 		this.condition = condition;
 		this.lastVisit = lastVisit;
@@ -68,11 +69,11 @@ public class Patient {
 
 	// --- Getters & Setters ---
 	public long getId() {
-		return id;
+		return patientId;
 	}
 
 	public void setId(long id) {
-		this.id = id;
+		this.patientId = id;
 	}
 
 	public String getName() {

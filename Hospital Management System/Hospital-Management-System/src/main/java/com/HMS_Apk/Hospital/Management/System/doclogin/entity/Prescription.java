@@ -11,7 +11,8 @@ import com.HMS_Apk.Hospital.Management.System.entity.Patient;
 public class Prescription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "prescriptionid")
+    private Long prescriptionid;
 
     private String medicineName;
     private String dosage;
@@ -19,7 +20,7 @@ public class Prescription {
     private LocalDate dateIssued = LocalDate.now();
 
     @ManyToOne
-    @JoinColumn(name = "patient_id", nullable = false)
+    @JoinColumn(name = "patientId", nullable = false)
     private Patient patient;
 
     public Prescription() {
@@ -29,7 +30,7 @@ public class Prescription {
 	public Prescription(Long id, String medicineName, String dosage, String instructions, LocalDate dateIssued,
 			Patient patient) {
 		super();
-		this.id = id;
+		this.prescriptionid = id;
 		this.medicineName = medicineName;
 		this.dosage = dosage;
 		this.instructions = instructions;
@@ -38,11 +39,11 @@ public class Prescription {
 	}
 
 	public Long getId() {
-		return id;
+		return prescriptionid;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.prescriptionid = id;
 	}
 
 	public String getMedicineName() {

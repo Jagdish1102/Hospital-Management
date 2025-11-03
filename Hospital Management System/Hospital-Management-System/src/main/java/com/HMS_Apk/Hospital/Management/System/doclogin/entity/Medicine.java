@@ -12,7 +12,8 @@ import jakarta.persistence.Table;
 public class Medicine {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	@Column(name = "medicineId")
+	private long medicineId;
 
 	@Column(name = "drugname")
 	private String name;
@@ -28,13 +29,13 @@ public class Medicine {
     private String expiryDate;
 
 
-	public long getId() {
-		return id;
+	public long getMedicineId() {
+		return medicineId;
 	}
 
 
-	public void setId(long id) {
-		this.id = id;
+	public void setMedicineId(long id) {
+		this.medicineId = id;
 	}
 
 
@@ -85,7 +86,7 @@ public class Medicine {
 
 	public Medicine(long id, String name, int quantity, double price, String expiryDate) {
 		super();
-		this.id = id;
+		this.medicineId = id;
 		this.name = name;
 		this.quantity = quantity;
 		this.price = price;

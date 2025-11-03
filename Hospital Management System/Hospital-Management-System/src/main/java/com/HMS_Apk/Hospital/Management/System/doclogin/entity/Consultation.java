@@ -7,6 +7,7 @@ import org.hibernate.annotations.ValueGenerationType;
 import com.HMS_Apk.Hospital.Management.System.entity.Doctor;
 import com.HMS_Apk.Hospital.Management.System.entity.Patient;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,10 +22,11 @@ import jakarta.persistence.Table;
 public class Consultation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "consultationId")
 	private Long consultationId;
 	
 	@ManyToOne
-	@JoinColumn(name = "id",nullable = false)
+	@JoinColumn(name = "patientId",nullable = false)
 	private Patient patient;
 	
 	@ManyToOne
@@ -32,8 +34,9 @@ public class Consultation {
 	private Doctor doctor;
 	
 	@OneToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "appointmentId")
 	private Appointment appointment;
+	
 	private LocalDate consultationDate;
 	private String symptoms;
 	private String diagnosis;
@@ -65,11 +68,11 @@ public class Consultation {
 		this.status = status;
 	}
 
-	public Long getId() {
+	public Long getConsultationId() {
 		return consultationId;
 	}
 
-	public void setId(Long id) {
+	public void setConsultationId(Long id) {
 		this.consultationId = id;
 	}
 

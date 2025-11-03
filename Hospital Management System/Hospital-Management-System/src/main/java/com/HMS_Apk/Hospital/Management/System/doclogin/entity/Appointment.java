@@ -3,6 +3,7 @@ package com.HMS_Apk.Hospital.Management.System.doclogin.entity;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +15,8 @@ import jakarta.persistence.Table;
 public class Appointment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	@Column(name = "appointmentId")
+	private long appointmentId;
 
 	private String name;
 	private String age;
@@ -32,23 +34,23 @@ public class Appointment {
 	public Appointment(long id, String name, String age, String symtomps, String number, String lastVisit,
 			LocalDate date, LocalTime time,String status) {
 		super();
-		this.id = id;
+		this.appointmentId = id;
 		this.name = name;
 		this.age = age;
 		this.symtomps = symtomps;
 		this.number = number;
-		lastVisit = lastVisit;
+		this.lastVisit = lastVisit;
 		this.date = date;
 		this.time = time;
 		this.status=status;
 	}
 
-	public long getId() {
-		return id;
+	public long getAppointmentId() {
+		return appointmentId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setAppointmentId(long id) {
+		this.appointmentId = id;
 	}
 	
 	public String getStatus() {

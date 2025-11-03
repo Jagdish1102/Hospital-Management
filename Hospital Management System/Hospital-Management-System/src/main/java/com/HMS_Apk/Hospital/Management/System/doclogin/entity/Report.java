@@ -2,6 +2,7 @@ package com.HMS_Apk.Hospital.Management.System.doclogin.entity;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +14,8 @@ import jakarta.persistence.Table;
 public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "reportId")
+     private Long reportId;
 
     private String patientName;
     private String reportType;     // e.g. "Blood Test", "X-Ray"
@@ -27,7 +29,7 @@ public class Report {
 	public Report(Long id, String patientName, String reportType, String description, String status,
 			LocalDateTime reportDate) {
 		super();
-		this.id = id;
+		this.reportId = id;
 		this.patientName = patientName;
 		this.reportType = reportType;
 		this.description = description;
@@ -40,11 +42,11 @@ public class Report {
 	}
 
 	public Long getId() {
-		return id;
+		return reportId;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.reportId = id;
 	}
 
 	public String getPatientName() {
