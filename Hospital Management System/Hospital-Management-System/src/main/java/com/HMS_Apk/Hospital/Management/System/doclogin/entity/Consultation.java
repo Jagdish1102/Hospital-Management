@@ -37,6 +37,10 @@ public class Consultation {
 	@JoinColumn(name = "appointmentId")
 	private Appointment appointment;
 	
+	@OneToOne
+	@JoinColumn(name = "prescriptionid")
+	private Prescription prescription;
+	
 	private LocalDate consultationDate;
 	private String symptoms;
 	private String diagnosis;
@@ -53,7 +57,7 @@ public class Consultation {
 	}
 
 	public Consultation(Long id, Patient patient, Doctor doctor, Appointment appointment, LocalDate consultationDate,
-			String symptoms, String diagnosis, String treatment, String notes, LocalDate followUpDate, String status) {
+			String symptoms, String diagnosis, String treatment, String notes, LocalDate followUpDate, String status,Prescription prescription) {
 		super();
 		this.consultationId = id;
 		this.patient = patient;
@@ -66,8 +70,17 @@ public class Consultation {
 		this.notes = notes;
 		this.followUpDate = followUpDate;
 		this.status = status;
+		this.prescription=prescription;
 	}
 
+	public Prescription getprescription() {
+		return prescription;
+	}
+	
+	public void setPrescription(Prescription prescription) {
+		this.prescription = prescription;
+	}
+	
 	public Long getConsultationId() {
 		return consultationId;
 	}
