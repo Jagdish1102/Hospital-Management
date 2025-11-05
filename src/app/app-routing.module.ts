@@ -17,7 +17,10 @@ const routes: Routes = [
   { path: 'appointmentlist', component: AppointmentComponent },
   { path: 'create-appointment', component: CreateAppointmentComponent },
   { path: 'docdash', component: DocdashComponent },
-  {path: 'consultation',component:ConsultationComponent},
+  { path: 'consultation', component: ConsultationComponent },
+  { path: 'add', component: ConsultationComponent },
+{ path: 'consultation/:patientId', component: ConsultationComponent },
+
   { path: 'add-patient', component: AddPatientComponent },
   { path: 'add-prescription', component: AddPrescriptionComponent },
   { path: 'appointment-form', component: AppointmentFormComponent }, // ✅ fixed
@@ -26,6 +29,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

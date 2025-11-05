@@ -8,6 +8,7 @@ export class Appointment {
   date: string = "";  // store as string, backend converts to LocalDate
   time: string = "";  //
 status: string = "Pending"; // default value
+email:string="";
 
 
 }

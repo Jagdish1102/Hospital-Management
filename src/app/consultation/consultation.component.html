@@ -1,871 +1,915 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Patient Consultation Workspace</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght&#64300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght&#64300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        :root {
-            --primary: #2A7DE1;
-            --primary-light: #E8F2FF;
-            --secondary: #6C757D;
-            --success: #28A745;
-            --danger: #DC3545;
-            --warning: #FFC107;
-            --light: #F8F9FA;
-            --dark: #212529;
-            --white: #FFFFFF;
-            --border-radius: 12px;
-            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            --transition: all 0.3s ease;
-        }
+      :root {
+        --primary: #2a7de1;
+        --primary-light: #e8f2ff;
+        --secondary: #6c757d;
+        --success: #28a745;
+        --danger: #dc3545;
+        --warning: #ffc107;
+        --light: #f8f9fa;
+        --dark: #212529;
+        --white: #ffffff;
+        --border-radius: 12px;
+        --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        --transition: all 0.3s ease;
+      }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
 
-        body {
-            background-color: #F5F7FB;
-            color: #333;
-            line-height: 1.6;
-        }
+      body {
+        background-color: #f5f7fb;
+        color: #333;
+        line-height: 1.6;
+      }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
 
-        /* Header Styles */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #E9ECEF;
-        }
+      /* Header Styles */
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #e9ecef;
+      }
 
-        .back-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: none;
-            border: none;
-            color: var(--primary);
-            font-weight: 500;
-            cursor: pointer;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: var(--transition);
-        }
+      .back-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: none;
+        border: none;
+        color: var(--primary);
+        font-weight: 500;
+        cursor: pointer;
+        padding: 8px 12px;
+        border-radius: 8px;
+        transition: var(--transition);
+      }
 
-        .back-btn:hover {
-            background-color: var(--primary-light);
-        }
+      .back-btn:hover {
+        background-color: var(--primary-light);
+      }
 
-        .patient-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
+      .patient-info {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
 
-        .patient-details h2 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
+      .patient-details h2 {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
 
-        .patient-meta {
-            display: flex;
-            gap: 16px;
-            color: var(--secondary);
-            font-size: 14px;
-        }
+      .patient-meta {
+        display: flex;
+        gap: 16px;
+        color: var(--secondary);
+        font-size: 14px;
+      }
 
-        .condition-tag {
-            background-color: var(--warning);
-            color: var(--dark);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-        }
+      .condition-tag {
+        background-color: var(--warning);
+        color: var(--dark);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+      }
 
-        .consultation-timer {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background-color: var(--primary-light);
-            padding: 8px 16px;
-            border-radius: var(--border-radius);
-            color: var(--primary);
-            font-weight: 500;
-        }
+      .consultation-timer {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: var(--primary-light);
+        padding: 8px 16px;
+        border-radius: var(--border-radius);
+        color: var(--primary);
+        font-weight: 500;
+      }
 
-        /* Patient Summary Card */
+      /* Patient Summary Card */
+      .patient-summary {
+        background-color: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        padding: 24px;
+        margin-bottom: 24px;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 24px;
+      }
+
+      .profile-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), #1e62d9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 48px;
+        font-weight: 300;
+      }
+
+      .contact-details {
+        width: 100%;
+        background-color: var(--light);
+        padding: 16px;
+        border-radius: var(--border-radius);
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+        font-size: 14px;
+      }
+
+      .contact-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .details-section h3 {
+        font-size: 18px;
+        margin-bottom: 16px;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .symptoms-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+
+      .symptom-tag {
+        background-color: var(--primary-light);
+        color: var(--primary);
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 14px;
+      }
+
+      .history-preview {
+        background-color: var(--light);
+        padding: 16px;
+        border-radius: var(--border-radius);
+      }
+
+      .history-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #e9ecef;
+      }
+
+      .history-item:last-child {
+        border-bottom: none;
+      }
+
+      /* Tabbed Section */
+      .tabbed-section {
+        background-color: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        overflow: hidden;
+        margin-bottom: 24px;
+      }
+
+      .tabs-header {
+        display: flex;
+        border-bottom: 1px solid #e9ecef;
+        background-color: var(--light);
+      }
+
+      .tab {
+        padding: 16px 24px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+        transition: var(--transition);
+        border-bottom: 3px solid transparent;
+      }
+
+      .tab.active {
+        color: var(--primary);
+        border-bottom: 3px solid var(--primary);
+        background-color: var(--white);
+      }
+
+      .tab:hover:not(.active) {
+        background-color: rgba(255, 255, 255, 0.7);
+      }
+
+      .tab-content {
+        padding: 24px;
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      /* Consultation Notes */
+      .text-editor {
+        border: 1px solid #e9ecef;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+
+      .editor-toolbar {
+        display: flex;
+        gap: 8px;
+        padding: 12px;
+        border-bottom: 1px solid #e9ecef;
+        background-color: var(--light);
+      }
+
+      .editor-toolbar button {
+        background: none;
+        border: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .editor-toolbar button:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+
+      .editor-content {
+        min-height: 200px;
+        padding: 16px;
+        outline: none;
+      }
+
+      .symptoms-checklist {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+
+      .check-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .diagnosis-suggestions {
+        margin-top: 20px;
+      }
+
+      .suggestion-dropdown {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #e9ecef;
+        border-radius: var(--border-radius);
+        background-color: var(--light);
+        font-size: 14px;
+        color: var(--secondary);
+      }
+
+      /* Prescription Tab */
+      .prescription-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+
+      .prescription-table th {
+        text-align: left;
+        padding: 12px;
+        background-color: var(--light);
+        border-bottom: 1px solid #e9ecef;
+        font-weight: 500;
+      }
+
+      .prescription-table td {
+        padding: 12px;
+        border-bottom: 1px solid #e9ecef;
+      }
+
+      .medicine-search {
+        position: relative;
+        margin-bottom: 20px;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #e9ecef;
+        border-radius: var(--border-radius);
+        font-size: 14px;
+      }
+
+      .search-icon {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--secondary);
+      }
+
+      .add-btn {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+        transition: var(--transition);
+      }
+
+      .add-btn:hover {
+        background-color: #1e62d9;
+      }
+
+      /* Test Recommendations */
+      .test-selector {
+        margin-bottom: 20px;
+      }
+
+      .test-dropdown {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #e9ecef;
+        border-radius: var(--border-radius);
+        font-size: 14px;
+      }
+
+      .test-slip-btn {
+        background-color: var(--success);
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+        transition: var(--transition);
+      }
+
+      .test-slip-btn:hover {
+        background-color: #218838;
+      }
+
+      /* Final Report */
+      .report-preview {
+        background-color: var(--light);
+        border-radius: var(--border-radius);
+        padding: 24px;
+        margin-bottom: 20px;
+        min-height: 300px;
+      }
+
+      .report-section {
+        margin-bottom: 20px;
+      }
+
+      .report-section h4 {
+        margin-bottom: 8px;
+        color: var(--primary);
+      }
+
+      .generate-pdf-btn {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+        transition: var(--transition);
+      }
+
+      .generate-pdf-btn:hover {
+        background-color: #1e62d9;
+      }
+
+      .auto-generate-section {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        padding: 16px;
+        background-color: var(--primary-light);
+        border-radius: var(--border-radius);
+      }
+
+      .auto-generate-btn {
+        background-color: var(--success);
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+        transition: var(--transition);
+      }
+
+      .auto-generate-btn:hover {
+        background-color: #218838;
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 16px;
+        margin-top: 24px;
+      }
+
+      .save-btn {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        font-weight: 500;
+        transition: var(--transition);
+      }
+
+      .save-btn:hover {
+        background-color: #1e62d9;
+      }
+
+      .finish-btn {
+        background-color: transparent;
+        color: var(--danger);
+        border: 1px solid var(--danger);
+        padding: 12px 24px;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        font-weight: 500;
+        transition: var(--transition);
+      }
+
+      .finish-btn:hover {
+        background-color: var(--danger);
+        color: white;
+      }
+
+      /* Status Indicators */
+      .status-indicator {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        margin-bottom: 16px;
+      }
+
+      .status-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+
+      .status-dot.complete {
+        background-color: var(--success);
+      }
+
+      .status-dot.incomplete {
+        background-color: var(--warning);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
         .patient-summary {
-            background-color: var(--white);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            padding: 24px;
-            margin-bottom: 24px;
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 24px;
-        }
-
-        .profile-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), #1E62D9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 48px;
-            font-weight: 300;
-        }
-
-        .contact-details {
-            width: 100%;
-            background-color: var(--light);
-            padding: 16px;
-            border-radius: var(--border-radius);
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-            font-size: 14px;
-        }
-
-        .contact-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .details-section h3 {
-            font-size: 18px;
-            margin-bottom: 16px;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .symptoms-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .symptom-tag {
-            background-color: var(--primary-light);
-            color: var(--primary);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-
-        .history-preview {
-            background-color: var(--light);
-            padding: 16px;
-            border-radius: var(--border-radius);
-        }
-
-        .history-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #E9ECEF;
-        }
-
-        .history-item:last-child {
-            border-bottom: none;
-        }
-
-        /* Tabbed Section */
-        .tabbed-section {
-            background-color: var(--white);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            overflow: hidden;
-            margin-bottom: 24px;
+          grid-template-columns: 1fr;
         }
 
         .tabs-header {
-            display: flex;
-            border-bottom: 1px solid #E9ECEF;
-            background-color: var(--light);
+          flex-wrap: wrap;
         }
 
         .tab {
-            padding: 16px 24px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-            transition: var(--transition);
-            border-bottom: 3px solid transparent;
-        }
-
-        .tab.active {
-            color: var(--primary);
-            border-bottom: 3px solid var(--primary);
-            background-color: var(--white);
-        }
-
-        .tab:hover:not(.active) {
-            background-color: rgba(255, 255, 255, 0.7);
-        }
-
-        .tab-content {
-            padding: 24px;
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Consultation Notes */
-        .text-editor {
-            border: 1px solid #E9ECEF;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .editor-toolbar {
-            display: flex;
-            gap: 8px;
-            padding: 12px;
-            border-bottom: 1px solid #E9ECEF;
-            background-color: var(--light);
-        }
-
-        .editor-toolbar button {
-            background: none;
-            border: none;
-            width: 32px;
-            height: 32px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .editor-toolbar button:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-
-        .editor-content {
-            min-height: 200px;
-            padding: 16px;
-            outline: none;
+          flex: 1;
+          min-width: 120px;
+          justify-content: center;
         }
 
         .symptoms-checklist {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 12px;
-            margin-bottom: 20px;
+          grid-template-columns: 1fr;
         }
-
-        .check-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .diagnosis-suggestions {
-            margin-top: 20px;
-        }
-
-        .suggestion-dropdown {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #E9ECEF;
-            border-radius: var(--border-radius);
-            background-color: var(--light);
-            font-size: 14px;
-            color: var(--secondary);
-        }
-
-        /* Prescription Tab */
-        .prescription-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        .prescription-table th {
-            text-align: left;
-            padding: 12px;
-            background-color: var(--light);
-            border-bottom: 1px solid #E9ECEF;
-            font-weight: 500;
-        }
-
-        .prescription-table td {
-            padding: 12px;
-            border-bottom: 1px solid #E9ECEF;
-        }
-
-        .medicine-search {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #E9ECEF;
-            border-radius: var(--border-radius);
-            font-size: 14px;
-        }
-
-        .search-icon {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--secondary);
-        }
-
-        .add-btn {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .add-btn:hover {
-            background-color: #1E62D9;
-        }
-
-        /* Test Recommendations */
-        .test-selector {
-            margin-bottom: 20px;
-        }
-
-        .test-dropdown {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #E9ECEF;
-            border-radius: var(--border-radius);
-            font-size: 14px;
-        }
-
-        .test-slip-btn {
-            background-color: var(--success);
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .test-slip-btn:hover {
-            background-color: #218838;
-        }
-
-        /* Final Report */
-        .report-preview {
-            background-color: var(--light);
-            border-radius: var(--border-radius);
-            padding: 24px;
-            margin-bottom: 20px;
-            min-height: 300px;
-        }
-
-        .report-section {
-            margin-bottom: 20px;
-        }
-
-        .report-section h4 {
-            margin-bottom: 8px;
-            color: var(--primary);
-        }
-
-        .generate-pdf-btn {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .generate-pdf-btn:hover {
-            background-color: #1E62D9;
-        }
-
-        .auto-generate-section {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-            padding: 16px;
-            background-color: var(--primary-light);
-            border-radius: var(--border-radius);
-        }
-
-        .auto-generate-btn {
-            background-color: var(--success);
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .auto-generate-btn:hover {
-            background-color: #218838;
-        }
-
-        /* Action Buttons */
-        .action-buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 16px;
-            margin-top: 24px;
-        }
-
-        .save-btn {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .save-btn:hover {
-            background-color: #1E62D9;
-        }
-
-        .finish-btn {
-            background-color: transparent;
-            color: var(--danger);
-            border: 1px solid var(--danger);
-            padding: 12px 24px;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .finish-btn:hover {
-            background-color: var(--danger);
-            color: white;
-        }
-
-        /* Status Indicators */
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            margin-bottom: 16px;
-        }
-
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        .status-dot.complete {
-            background-color: var(--success);
-        }
-
-        .status-dot.incomplete {
-            background-color: var(--warning);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .patient-summary {
-                grid-template-columns: 1fr;
-            }
-            
-            .tabs-header {
-                flex-wrap: wrap;
-            }
-            
-            .tab {
-                flex: 1;
-                min-width: 120px;
-                justify-content: center;
-            }
-            
-            .symptoms-checklist {
-                grid-template-columns: 1fr;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <button class="back-btn">
-                <i class="fas fa-arrow-left"></i> Back to Patient List
+      <!-- Header -->
+      <div class="header">
+        <button class="back-btn" (click)="goBack()">
+          <i class="fas fa-arrow-left"></i> Back to Patient List
+        </button>
+        <div class="patient-info" *ngIf="patient">
+          <div class="patient-details">
+            <h2>{{ patient?.name }}</h2>
+            <div class="patient-meta">
+              <span>Age: {{ patient?.age }}</span>
+              <span class="condition-tag">{{ patient?.status }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="consultation-timer">
+          <i class="fas fa-clock"></i>
+          <span>{{ timer }}</span>
+        </div>
+      </div>
+
+      <!-- Patient Summary Card -->
+      <div class="patient-summary">
+        <div class="profile-section">
+          <div class="avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="patient-info" *ngIf="patient">
+            <div class="contact-details">
+              <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <span>{{ patient?.number }}</span>
+                <!-- change to phone if needed -->
+              </div>
+
+              <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>{{ patient?.email }}</span>
+              </div>
+
+              <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>{{ patient?.address }}</span>
+                <!-- dynamic address -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="details-section">
+          <h3><i class="fas fa-stethoscope"></i> Visit Reason & Symptoms</h3>
+          <div class="symptoms-list">
+            <span class="symptom-tag">Fever</span>
+            <span class="symptom-tag">Headache</span>
+            <span class="symptom-tag">Fatigue</span>
+            <span class="symptom-tag">Cough</span>
+          </div>
+
+          <h3><i class="fas fa-history"></i> Medical History Preview</h3>
+          <div class="history-preview">
+            <div class="history-item">
+              <span>Annual Checkup</span>
+              <span>June 12, 2023</span>
+            </div>
+            <div class="history-item">
+              <span>Flu Vaccination</span>
+              <span>October 5, 2022</span>
+            </div>
+            <div class="history-item">
+              <span>Allergy Consultation</span>
+              <span>March 18, 2022</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabbed Section -->
+      <div class="tabbed-section">
+        <div class="tabs-header">
+          <div class="tab active" data-tab="notes">
+            <i class="fas fa-edit"></i> Consultation Notes
+          </div>
+          <div class="tab" data-tab="prescriptions">
+            <i class="fas fa-pills"></i> Prescriptions
+          </div>
+          <div class="tab" data-tab="tests">
+            <i class="fas fa-vial"></i> Test Recommendations
+          </div>
+          <div class="tab" data-tab="report">
+            <i class="fas fa-file-medical"></i> Final Report
+          </div>
+        </div>
+
+        <!-- Consultation Notes Tab -->
+        <div class="tab-content active" id="notes-tab">
+          <div class="text-editor">
+            <div class="editor-toolbar">
+              <button><i class="fas fa-bold"></i></button>
+              <button><i class="fas fa-italic"></i></button>
+              <button><i class="fas fa-underline"></i></button>
+              <button><i class="fas fa-list-ul"></i></button>
+              <button><i class="fas fa-list-ol"></i></button>
+            </div>
+            <div
+              class="editor-content"
+              contenteditable="true"
+              id="consultation-notes"
+            >
+              Patient presents with fever, headache, and fatigue for 3 days. No
+              significant travel history. Vital signs stable. No respiratory
+              distress observed.
+            </div>
+          </div>
+
+          <h4>Symptoms Checklist</h4>
+          <div class="symptoms-checklist">
+            <div class="check-item">
+              <input type="checkbox" id="fever" checked />
+              <label for="fever">Fever</label>
+            </div>
+            <div class="check-item">
+              <input type="checkbox" id="headache" checked />
+              <label for="headache">Headache</label>
+            </div>
+            <div class="check-item">
+              <input type="checkbox" id="fatigue" checked />
+              <label for="fatigue">Fatigue</label>
+            </div>
+            <div class="check-item">
+              <input type="checkbox" id="cough" />
+              <label for="cough">Cough</label>
+            </div>
+            <div class="check-item">
+              <input type="checkbox" id="nausea" />
+              <label for="nausea">Nausea</label>
+            </div>
+            <div class="check-item">
+              <input type="checkbox" id="dizziness" />
+              <label for="dizziness">Dizziness</label>
+            </div>
+          </div>
+
+          <div class="diagnosis-suggestions">
+            <h4>AI Diagnosis Suggestions</h4>
+            <select class="suggestion-dropdown" id="diagnosis-select">
+              <option>Select a suggested diagnosis</option>
+              <option>Influenza (Flu)</option>
+              <option>Common Cold</option>
+              <option>COVID-19 (Test Recommended)</option>
+              <option>Migraine</option>
+              <option>Sinusitis</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Prescriptions Tab -->
+        <div class="tab-content" id="prescriptions-tab">
+          <div class="medicine-search">
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Search for medicines..."
+            />
+            <i class="fas fa-search search-icon"></i>
+          </div>
+
+          <table class="prescription-table">
+            <thead>
+              <tr>
+                <th>Medicine Name</th>
+                <th>Dose</th>
+                <th>Frequency</th>
+                <th>Duration</th>
+                <th>Notes</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="prescription-list">
+              <tr>
+                <td>Paracetamol</td>
+                <td>500mg</td>
+                <td>Every 6 hours</td>
+                <td>3 days</td>
+                <td>After meals</td>
+                <td>
+                  <i
+                    class="fas fa-trash"
+                    style="color: var(--danger); cursor: pointer"
+                  ></i>
+                </td>
+              </tr>
+              <tr>
+                <td>Ibuprofen</td>
+                <td>400mg</td>
+                <td>Every 8 hours</td>
+                <td>3 days</td>
+                <td>As needed for pain</td>
+                <td>
+                  <i
+                    class="fas fa-trash"
+                    style="color: var(--danger); cursor: pointer"
+                  ></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <button class="add-btn">
+            <i class="fas fa-plus"></i> Add Medicine
+          </button>
+        </div>
+
+        <!-- Test Recommendations Tab -->
+        <div class="tab-content" id="tests-tab">
+          <div class="test-selector">
+            <select class="test-dropdown" id="test-select">
+              <option>Select lab tests</option>
+              <option>Complete Blood Count (CBC)</option>
+              <option>COVID-19 Test</option>
+              <option>Influenza Test</option>
+              <option>Thyroid Function Test</option>
+              <option>Liver Function Test</option>
+              <option>Kidney Function Test</option>
+            </select>
+          </div>
+
+          <button class="test-slip-btn">
+            <i class="fas fa-download"></i> Download Test Slip
+          </button>
+        </div>
+
+        <!-- Final Report Tab -->
+        <div class="tab-content" id="report-tab">
+          <div class="status-indicator">
+            <span class="status-dot complete"></span>
+            <span
+              >Report is automatically generated and updated in real-time</span
+            >
+          </div>
+
+          <div class="auto-generate-section">
+            <button class="auto-generate-btn" id="regenerate-report">
+              <i class="fas fa-sync-alt"></i> Regenerate Report
             </button>
-            <div class="patient-info">
-                <div class="patient-details">
-                    <h2>Sarah Johnson</h2>
-                    <div class="patient-meta">
-                        <span>Age: 34</span>
-                        <span>Gender: Female</span>
-                        <span class="condition-tag">Under Consultation</span>
-                    </div>
-                </div>
-            </div>
-            <div class="consultation-timer">
-                <i class="fas fa-clock"></i>
-                <span id="timer">00:12:45</span>
-            </div>
+            <span>Click to update report with latest changes</span>
+          </div>
+
+          <div class="report-preview" id="report-content">
+            <!-- Report content will be generated here -->
+          </div>
+
+          <button class="generate-pdf-btn">
+            <i class="fas fa-file-pdf"></i> Generate PDF Report
+          </button>
         </div>
+      </div>
 
-        <!-- Patient Summary Card -->
-        <div class="patient-summary">
-            <div class="profile-section">
-                <div class="avatar">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="contact-details">
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <span>+1 (555) 123-4567</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <span>sarah.jexample.com</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>123 Main St, New York</span>
-                    </div>
-                </div>
-            </div>
-            <div class="details-section">
-                <h3><i class="fas fa-stethoscope"></i> Visit Reason & Symptoms</h3>
-                <div class="symptoms-list">
-                    <span class="symptom-tag">Fever</span>
-                    <span class="symptom-tag">Headache</span>
-                    <span class="symptom-tag">Fatigue</span>
-                    <span class="symptom-tag">Cough</span>
-                </div>
-                
-                <h3><i class="fas fa-history"></i> Medical History Preview</h3>
-                <div class="history-preview">
-                    <div class="history-item">
-                        <span>Annual Checkup</span>
-                        <span>June 12, 2023</span>
-                    </div>
-                    <div class="history-item">
-                        <span>Flu Vaccination</span>
-                        <span>October 5, 2022</span>
-                    </div>
-                    <div class="history-item">
-                        <span>Allergy Consultation</span>
-                        <span>March 18, 2022</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tabbed Section -->
-        <div class="tabbed-section">
-            <div class="tabs-header">
-                <div class="tab active" data-tab="notes">
-                    <i class="fas fa-edit"></i> Consultation Notes
-                </div>
-                <div class="tab" data-tab="prescriptions">
-                    <i class="fas fa-pills"></i> Prescriptions
-                </div>
-                <div class="tab" data-tab="tests">
-                    <i class="fas fa-vial"></i> Test Recommendations
-                </div>
-                <div class="tab" data-tab="report">
-                    <i class="fas fa-file-medical"></i> Final Report
-                </div>
-            </div>
-
-            <!-- Consultation Notes Tab -->
-            <div class="tab-content active" id="notes-tab">
-                <div class="text-editor">
-                    <div class="editor-toolbar">
-                        <button><i class="fas fa-bold"></i></button>
-                        <button><i class="fas fa-italic"></i></button>
-                        <button><i class="fas fa-underline"></i></button>
-                        <button><i class="fas fa-list-ul"></i></button>
-                        <button><i class="fas fa-list-ol"></i></button>
-                    </div>
-                    <div class="editor-content" contenteditable="true" id="consultation-notes">
-                        Patient presents with fever, headache, and fatigue for 3 days. No significant travel history. Vital signs stable. No respiratory distress observed.
-                    </div>
-                </div>
-
-                <h4>Symptoms Checklist</h4>
-                <div class="symptoms-checklist">
-                    <div class="check-item">
-                        <input type="checkbox" id="fever" checked>
-                        <label for="fever">Fever</label>
-                    </div>
-                    <div class="check-item">
-                        <input type="checkbox" id="headache" checked>
-                        <label for="headache">Headache</label>
-                    </div>
-                    <div class="check-item">
-                        <input type="checkbox" id="fatigue" checked>
-                        <label for="fatigue">Fatigue</label>
-                    </div>
-                    <div class="check-item">
-                        <input type="checkbox" id="cough">
-                        <label for="cough">Cough</label>
-                    </div>
-                    <div class="check-item">
-                        <input type="checkbox" id="nausea">
-                        <label for="nausea">Nausea</label>
-                    </div>
-                    <div class="check-item">
-                        <input type="checkbox" id="dizziness">
-                        <label for="dizziness">Dizziness</label>
-                    </div>
-                </div>
-
-                <div class="diagnosis-suggestions">
-                    <h4>AI Diagnosis Suggestions</h4>
-                    <select class="suggestion-dropdown" id="diagnosis-select">
-                        <option>Select a suggested diagnosis</option>
-                        <option>Influenza (Flu)</option>
-                        <option>Common Cold</option>
-                        <option>COVID-19 (Test Recommended)</option>
-                        <option>Migraine</option>
-                        <option>Sinusitis</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Prescriptions Tab -->
-            <div class="tab-content" id="prescriptions-tab">
-                <div class="medicine-search">
-                    <input type="text" class="search-input" placeholder="Search for medicines...">
-                    <i class="fas fa-search search-icon"></i>
-                </div>
-
-                <table class="prescription-table">
-                    <thead>
-                        <tr>
-                            <th>Medicine Name</th>
-                            <th>Dose</th>
-                            <th>Frequency</th>
-                            <th>Duration</th>
-                            <th>Notes</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="prescription-list">
-                        <tr>
-                            <td>Paracetamol</td>
-                            <td>500mg</td>
-                            <td>Every 6 hours</td>
-                            <td>3 days</td>
-                            <td>After meals</td>
-                            <td><i class="fas fa-trash" style="color: var(--danger); cursor: pointer;"></i></td>
-                        </tr>
-                        <tr>
-                            <td>Ibuprofen</td>
-                            <td>400mg</td>
-                            <td>Every 8 hours</td>
-                            <td>3 days</td>
-                            <td>As needed for pain</td>
-                            <td><i class="fas fa-trash" style="color: var(--danger); cursor: pointer;"></i></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <button class="add-btn">
-                    <i class="fas fa-plus"></i> Add Medicine
-                </button>
-            </div>
-
-            <!-- Test Recommendations Tab -->
-            <div class="tab-content" id="tests-tab">
-                <div class="test-selector">
-                    <select class="test-dropdown" id="test-select">
-                        <option>Select lab tests</option>
-                        <option>Complete Blood Count (CBC)</option>
-                        <option>COVID-19 Test</option>
-                        <option>Influenza Test</option>
-                        <option>Thyroid Function Test</option>
-                        <option>Liver Function Test</option>
-                        <option>Kidney Function Test</option>
-                    </select>
-                </div>
-
-                <button class="test-slip-btn">
-                    <i class="fas fa-download"></i> Download Test Slip
-                </button>
-            </div>
-
-            <!-- Final Report Tab -->
-            <div class="tab-content" id="report-tab">
-                <div class="status-indicator">
-                    <span class="status-dot complete"></span>
-                    <span>Report is automatically generated and updated in real-time</span>
-                </div>
-                
-                <div class="auto-generate-section">
-                    <button class="auto-generate-btn" id="regenerate-report">
-                        <i class="fas fa-sync-alt"></i> Regenerate Report
-                    </button>
-                    <span>Click to update report with latest changes</span>
-                </div>
-
-                <div class="report-preview" id="report-content">
-                    <!-- Report content will be generated here -->
-                </div>
-
-                <button class="generate-pdf-btn">
-                    <i class="fas fa-file-pdf"></i> Generate PDF Report
-                </button>
-            </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="action-buttons">
-            <button class="save-btn">
-                <i class="fas fa-save"></i> Save Consultation
-            </button>
-            <button class="finish-btn">
-                <i class="fas fa-flag-checkered"></i> Finish Consultation
-            </button>
-        </div>
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button class="save-btn">
+          <i class="fas fa-save"></i> Save Consultation
+        </button>
+        <button class="finish-btn">
+          <i class="fas fa-flag-checkered"></i> Finish Consultation
+        </button>
+      </div>
     </div>
 
     <script>
-        // Tab switching functionality
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                // Remove active class from all tabs and contents
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                
-                // Add active class to clicked tab
-                tab.classList.add('active');
-                
-                // Show corresponding content
-                const tabId = tab.getAttribute('data-tab');
-                document.getElementById(`${tabId}-tab`).classList.add('active');
-                
-                // If report tab is selected, generate the report
-                if (tabId === 'report') {
-                    generateReport();
-                }
-            });
+      // Tab switching functionality
+      document.querySelectorAll(".tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          // Remove active class from all tabs and contents
+          document
+            .querySelectorAll(".tab")
+            .forEach((t) => t.classList.remove("active"));
+          document
+            .querySelectorAll(".tab-content")
+            .forEach((c) => c.classList.remove("active"));
+
+          // Add active class to clicked tab
+          tab.classList.add("active");
+
+          // Show corresponding content
+          const tabId = tab.getAttribute("data-tab");
+          document.getElementById(`${tabId}-tab`).classList.add("active");
+
+          // If report tab is selected, generate the report
+          if (tabId === "report") {
+            generateReport();
+          }
+        });
+      });
+
+      // Timer functionality (simplified)
+      let seconds = 0;
+      let minutes = 12;
+      let hours = 0;
+
+      function updateTimer() {
+        seconds++;
+        if (seconds >= 60) {
+          seconds = 0;
+          minutes++;
+        }
+        if (minutes >= 60) {
+          minutes = 0;
+          hours++;
+        }
+
+        const timerDisplay = `${hours.toString().padStart(2, "0")}:${minutes
+          .toString()
+          .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+        document.getElementById("timer").textContent = timerDisplay;
+      }
+
+      // Update timer every second
+      setInterval(updateTimer, 1000);
+
+      // Report generation functionality
+      function generateReport() {
+        const notes = document.getElementById("consultation-notes").innerText;
+        const diagnosis = document.getElementById("diagnosis-select").value;
+        const tests = document.getElementById("test-select").value;
+
+        // Get prescription data
+        const prescriptionRows = document.querySelectorAll(
+          "#prescription-list tr"
+        );
+        let prescriptionsHTML = "";
+        prescriptionRows.forEach((row) => {
+          const cells = row.querySelectorAll("td");
+          if (cells.length > 0) {
+            prescriptionsHTML += `<li>${cells[0].textContent} - ${cells[1].textContent}, ${cells[2].textContent} for ${cells[3].textContent}</li>`;
+          }
         });
 
-        // Timer functionality (simplified)
-        let seconds = 0;
-        let minutes = 12;
-        let hours = 0;
-        
-        function updateTimer() {
-            seconds++;
-            if (seconds >= 60) {
-                seconds = 0;
-                minutes++;
-            }
-            if (minutes >= 60) {
-                minutes = 0;
-                hours++;
-            }
-            
-            const timerDisplay = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            document.getElementById('timer').textContent = timerDisplay;
-        }
-        
-        // Update timer every second
-        setInterval(updateTimer, 1000);
+        // Get selected symptoms
+        const selectedSymptoms = [];
+        document
+          .querySelectorAll(".symptoms-checklist input:checked")
+          .forEach((checkbox) => {
+            selectedSymptoms.push(checkbox.nextElementSibling.textContent);
+          });
 
-        // Report generation functionality
-        function generateReport() {
-            const notes = document.getElementById('consultation-notes').innerText;
-            const diagnosis = document.getElementById('diagnosis-select').value;
-            const tests = document.getElementById('test-select').value;
-            
-            // Get prescription data
-            const prescriptionRows = document.querySelectorAll('#prescription-list tr');
-            let prescriptionsHTML = '';
-            prescriptionRows.forEach(row => {
-                const cells = row.querySelectorAll('td');
-                if (cells.length > 0) {
-                    prescriptionsHTML += `<li>${cells[0].textContent} - ${cells[1].textContent}, ${cells[2].textContent} for ${cells[3].textContent}</li>`;
-                }
-            });
-            
-            // Get selected symptoms
-            const selectedSymptoms = [];
-            document.querySelectorAll('.symptoms-checklist input:checked').forEach(checkbox => {
-                selectedSymptoms.push(checkbox.nextElementSibling.textContent);
-            });
-            
-            // Generate current date
-            const currentDate = new Date().toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-            
-            // Build report HTML
-            const reportHTML = `
+        // Generate current date
+        const currentDate = new Date().toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+
+        // Build report HTML
+        const reportHTML = `
                 <div class="report-section">
                     <h4>Patient Information</h4>
                     <p><strong>Name:</strong> Sarah Johnson</p>
@@ -877,7 +921,9 @@
                 <div class="report-section">
                     <h4>Presenting Symptoms</h4>
                     <ul>
-                        ${selectedSymptoms.map(symptom => `<li>${symptom}</li>`).join('')}
+                        ${selectedSymptoms
+                          .map((symptom) => `<li>${symptom}</li>`)
+                          .join("")}
                     </ul>
                 </div>
                 
@@ -888,19 +934,30 @@
                 
                 <div class="report-section">
                     <h4>Diagnosis</h4>
-                    <p>${diagnosis !== 'Select a suggested diagnosis' ? diagnosis : 'Diagnosis pending'}</p>
+                    <p>${
+                      diagnosis !== "Select a suggested diagnosis"
+                        ? diagnosis
+                        : "Diagnosis pending"
+                    }</p>
                 </div>
                 
                 <div class="report-section">
                     <h4>Prescribed Medications</h4>
                     <ul>
-                        ${prescriptionsHTML || '<li>No medications prescribed</li>'}
+                        ${
+                          prescriptionsHTML ||
+                          "<li>No medications prescribed</li>"
+                        }
                     </ul>
                 </div>
                 
                 <div class="report-section">
                     <h4>Recommended Tests</h4>
-                    <p>${tests !== 'Select lab tests' ? tests : 'No tests recommended'}</p>
+                    <p>${
+                      tests !== "Select lab tests"
+                        ? tests
+                        : "No tests recommended"
+                    }</p>
                 </div>
                 
                 <div class="report-section">
@@ -908,27 +965,29 @@
                     <p>Return if symptoms worsen or persist beyond 5 days. Maintain hydration and rest.</p>
                 </div>
             `;
-            
-            document.getElementById('report-content').innerHTML = reportHTML;
-        }
 
-        // Add event listener for regenerate button
-        document.getElementById('regenerate-report').addEventListener('click', generateReport);
-        
-        // Auto-generate report when page loads if on report tab
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check if we're on the report tab
-            const reportTab = document.querySelector('.tab[data-tab="report"]');
-            if (reportTab && reportTab.classList.contains('active')) {
-                generateReport();
-            }
-        });
-        
-        // Auto-save functionality (simulated)
-        setInterval(function() {
-            // In a real application, this would save data to the server
-            console.log('Auto-saving consultation data...');
-        }, 30000); // Auto-save every 30 seconds
+        document.getElementById("report-content").innerHTML = reportHTML;
+      }
+
+      // Add event listener for regenerate button
+      document
+        .getElementById("regenerate-report")
+        .addEventListener("click", generateReport);
+
+      // Auto-generate report when page loads if on report tab
+      document.addEventListener("DOMContentLoaded", function () {
+        // Check if we're on the report tab
+        const reportTab = document.querySelector('.tab[data-tab="report"]');
+        if (reportTab && reportTab.classList.contains("active")) {
+          generateReport();
+        }
+      });
+
+      // Auto-save functionality (simulated)
+      setInterval(function () {
+        // In a real application, this would save data to the server
+        console.log("Auto-saving consultation data...");
+      }, 30000); // Auto-save every 30 seconds
     </script>
-</body>
+  </body>
 </html>
