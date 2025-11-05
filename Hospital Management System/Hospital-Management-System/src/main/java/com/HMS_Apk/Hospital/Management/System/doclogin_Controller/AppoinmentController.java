@@ -38,8 +38,23 @@ public class AppoinmentController {
     // ✅ Create Appointment (POST /api/v2/appointments)
     @PostMapping("/insert")
     public Appointment createAppointment(@RequestBody Appointment appointment) {
-        return appointmentRepository.save(appointment);
+
+        // Save appointment first
+        Appointment savedApp = appointmentRepository.save(appointment);
+
+        // Create patient record with contact details
+        Patient p = new Patient();
+        p.setName(appointment.getName());
+        p.setEmail(appointment.getEmail());
+        p.setNumber(appointment.getNumber());
+        p.setAge(appointment.getAge()); // optional
+        p.setStatus("New"); // optional
+        
+        patientRepository.save(p);
+
+        return savedApp;
     }
+
 
     // ✅ Get All Appointments (GET /api/v2/appointments)
     @GetMapping
@@ -82,5 +97,7 @@ public class AppoinmentController {
 
         return ResponseEntity.ok(savedPatient);
     }
+    
+    
 
 }

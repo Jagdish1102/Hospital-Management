@@ -8,4 +8,6 @@ import com.HMS_Apk.Hospital.Management.System.entity.Patient;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
 
+	Patient getPatientById(Long patientId);
+
 }

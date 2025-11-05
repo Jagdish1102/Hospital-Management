@@ -3,6 +3,8 @@ package com.HMS_Apk.Hospital.Management.System.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.JoinColumnOrFormula;
+
 @Entity
 @Table(name = "patients")
 public class Patient {
@@ -21,12 +23,17 @@ public class Patient {
 	@Column(name = "last_visit")
 	private LocalDateTime lastVisit;
 
+	@Column(name = "email")
+	private String email;
+
+	@Column(name = "number")
+	private String number;
+
 	@Column(name = "status")
 	private String status;
-	
+
 	@Column(name = "symtomps")
-    private	String symtomps;
-	
+	private String symtomps;
 
 	@Column(name = "age")
 	private String age;
@@ -46,12 +53,15 @@ public class Patient {
 	@Column(name = "urgency")
 	private String urgency;
 
-	
+	@Column(name = "address ")
+	private String address;
+
 	public Patient() {
 	}
 
 	public Patient(long id, String name, String condition, LocalDateTime lastVisit, String status, String age,
-			String bloodGroup, String prescription, String dose, String fees, String urgency,String symtomps) {
+			String bloodGroup, String prescription, String email, String address, String number, String dose,
+			String fees, String urgency, String symtomps) {
 		super();
 		this.patientId = id;
 		this.name = name;
@@ -64,11 +74,14 @@ public class Patient {
 		this.dose = dose;
 		this.fees = fees;
 		this.urgency = urgency;
-		this.symtomps=symtomps;
+		this.symtomps = symtomps;
+		this.email = email;
+		this.number = number;
+		this.address = address;
 	}
 
 	// --- Getters & Setters ---
-	public long getId() {
+	public long getPatientId() {
 		return patientId;
 	}
 
@@ -111,10 +124,11 @@ public class Patient {
 	public String getAge() {
 		return age;
 	}
-	
+
 	public void setSymtomps(String symtomps) {
-		this.symtomps=symtomps;
+		this.symtomps = symtomps;
 	}
+
 	public String getSymtomps() {
 		return symtomps;
 	}
@@ -161,5 +175,29 @@ public class Patient {
 
 	public void setUrgency(String urgency) {
 		this.urgency = urgency;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+	public String getaddress() {
+		return address;
+	}
+
+	public void setaddress(String address) {
+		this.address = address;
 	}
 }

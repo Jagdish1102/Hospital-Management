@@ -39,7 +39,7 @@ public class DoctorController {
 		return doctorService.getAllDoctors();
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/{doctorid}")
 	public Doctor getDoctorById(@PathVariable Long doctorid) {
 		return doctorService.getDoctorById(doctorid);
 	}

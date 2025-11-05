@@ -26,13 +26,14 @@ public class Appointment {
 	private String status;
 	private LocalDate date;
 	private LocalTime time;
+	private String email;
 
 	public Appointment() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public Appointment(long id, String name, String age, String symtomps, String number, String lastVisit,
-			LocalDate date, LocalTime time,String status) {
+			LocalDate date, LocalTime time,String status,String email) {
 		super();
 		this.appointmentId = id;
 		this.name = name;
@@ -43,24 +44,16 @@ public class Appointment {
 		this.date = date;
 		this.time = time;
 		this.status=status;
+		this.email=email;
 	}
 
 	public long getAppointmentId() {
 		return appointmentId;
 	}
 
-	public void setAppointmentId(long id) {
-		this.appointmentId = id;
+	public void setAppointmentId(long appointmentId) {
+		this.appointmentId = appointmentId;
 	}
-	
-	public String getStatus() {
-	    return status;
-	}
-
-	public void setStatus(String status) {
-	    this.status = status;
-	}
-
 
 	public String getName() {
 		return name;
@@ -99,7 +92,15 @@ public class Appointment {
 	}
 
 	public void setLastVisit(String lastVisit) {
-		lastVisit = lastVisit;
+		this.lastVisit = lastVisit;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public LocalDate getDate() {
@@ -117,6 +118,17 @@ public class Appointment {
 	public void setTime(LocalTime time) {
 		this.time = time;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	
 	
 	
 

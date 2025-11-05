@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.HMS_Apk.Hospital.Management.System.Repository.PatientRepository;
+import com.HMS_Apk.Hospital.Management.System.entity.Doctor;
 import com.HMS_Apk.Hospital.Management.System.entity.Patient;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -51,7 +52,14 @@ public class PatientController {
 		response.put("Deleted",Boolean.TRUE);
 		return ResponseEntity.ok(response);
 	}
-
 	
+	@GetMapping("/{patientId}")
+	public ResponseEntity<Patient> getPatientById(@PathVariable Long patientId) {
+	    Patient patient = patientRepository.findById(patientId)
+	            .orElseThrow(() -> new RuntimeException("Patient Not Found with id: " + patientId));
+	    return ResponseEntity.ok(patient);
+	}
+
+
 	
 }
