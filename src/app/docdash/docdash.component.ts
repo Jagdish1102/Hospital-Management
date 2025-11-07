@@ -44,19 +44,20 @@ export class DocdashComponent {
   }
 
   // ✅ View Patient Method
-  viewPatient(id: number): void {
-    this.router.navigate(['/patients/view', id]);
+  viewPatient(patientId: number): void {
+    this.router.navigate(['/patients/view', patientId]);
   }
 
-  editPatient(id: number): void {
-    this.router.navigate(['/patients/edit', id]);
+  editPatient(patientId: number): void {
+    this.router.navigate(['/patients/edit', patientId]);
   }
 
-  deletePatient(id: number): void {
+  deletePatient(patientId: number): void {
     if (confirm('Are you sure you want to delete this patient?')) {
-      this.patientService.deletePatient(id).subscribe({
+      this.patientService.deletePatient(patientId).subscribe({
         next: () => {
-          console.log('Deleted patient with ID:', id);
+          console.log('Deleted patient with ID:', patientId);
+          
           this.getPatients(); // refresh list
         },
         error: (err) => {
@@ -145,6 +146,22 @@ manageAppointment(id: number): void {
 
         alert('Failed to delete the appointment. Please try again.');
       },
+    });
+  }
+
+
+
+   updateStatus(patientId: number, status: string) {
+    if (!patientId || !status) return;
+
+    this.patientService.updatePatientStatus(patientId, status).subscribe({
+      next: (response) => {
+        alert('✅ Status updated successfully!');
+      },
+      error: (err) => {
+        console.error('Error updating status', err);
+        alert('❌ Failed to update status!');
+      }
     });
   }
 }

@@ -19,6 +19,7 @@ export class ConsultationComponent implements OnInit {
   email!: string;
   number!: string;
   address!: string;
+  symtomps!: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,9 +31,9 @@ export class ConsultationComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('patientId'); // ✅ get ID from URL
-   if(id){
+    if (id) {
       this.loadPatientById(Number(id));
-   }
+    }
 
     this.getConsultations();
     this.startTimer();
@@ -44,16 +45,15 @@ export class ConsultationComponent implements OnInit {
       .subscribe((data) => (this.consultations = data));
   }
 
- loadPatientById(id: number) {
-  this.http.get(`http://localhost:8080/api/v1/patient/${id}`).subscribe(
-    (data: any) => {
-      this.patient = data;
-      console.log("patient data =>",this.patient);
-    },
-    (error) => console.log(error)
-  );
-}
-
+  loadPatientById(id: number) {
+    this.http.get(`http://localhost:8080/api/v1/patient/${id}`).subscribe(
+      (data: any) => {
+        this.patient = data;
+        console.log('patient data =>', this.patient);
+      },
+      (error) => console.log(error)
+    );
+  }
 
   goBack() {
     this.location.back();
@@ -82,5 +82,19 @@ export class ConsultationComponent implements OnInit {
     if (this.interval) {
       clearInterval(this.interval);
     }
+  }
+
+  updateStatus(patientId: number, status: string) {
+    if (!patientId || !status) return;
+
+    this.patientService.updatePatientStatus(patientId, status).subscribe({
+      next: (response) => {
+        alert('✅ Status updated successfully!');
+      },
+      error: (err) => {
+        console.error('Error updating status', err);
+        alert('❌ Failed to update status!');
+      },
+    });
   }
 }

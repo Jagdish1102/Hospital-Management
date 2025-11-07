@@ -1,1 +1,519 @@
-<p>reports works!</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patient Reports - Consultation View</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #007bff;
+        --primary-light: #e6f2ff;
+        --secondary: #6c757d;
+        --success: #28a745;
+        --warning: #ffc107;
+        --danger: #dc3545;
+        --light: #f8f9fa;
+        --dark: #212529;
+        --white: #ffffff;
+        --border-radius: 12px;
+        --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        --transition: all 0.3s ease;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+
+      body {
+        background-color: #f5f7fb;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      /* Header Styles */
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #e9ecef;
+      }
+
+      .page-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--dark);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .page-title i {
+        color: var(--primary);
+      }
+
+      .back-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: none;
+        border: none;
+        color: var(--primary);
+        font-weight: 500;
+        cursor: pointer;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: var(--transition);
+      }
+
+      .back-btn:hover {
+        background-color: var(--primary-light);
+      }
+
+      /* Patient Info Card */
+      .patient-info-card {
+        background-color: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        padding: 20px;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .patient-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), #1e62d9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 32px;
+      }
+
+      .patient-details h2 {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .patient-meta {
+        display: flex;
+        gap: 20px;
+        color: var(--secondary);
+        font-size: 14px;
+      }
+
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* Quick Stats */
+      .quick-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .stat-card {
+        background-color: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        padding: 16px;
+        text-align: center;
+        transition: var(--transition);
+      }
+
+      .stat-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+      }
+
+      .stat-value {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+
+      .stat-label {
+        font-size: 14px;
+        color: var(--secondary);
+      }
+
+      /* Reports List */
+      .reports-list {
+        background-color: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        overflow: hidden;
+      }
+
+      .report-item {
+        padding: 20px;
+        border-bottom: 1px solid #e9ecef;
+        transition: var(--transition);
+        cursor: pointer;
+      }
+
+      .report-item:hover {
+        background-color: var(--primary-light);
+      }
+
+      .report-item:last-child {
+        border-bottom: none;
+      }
+
+      .report-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 12px;
+      }
+
+      .report-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--dark);
+      }
+
+      .report-type {
+        background-color: var(--primary-light);
+        color: var(--primary);
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .report-meta {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 12px;
+        font-size: 14px;
+        color: var(--secondary);
+      }
+
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .report-summary {
+        color: var(--secondary);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .status-badge {
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .status-completed {
+        background-color: rgba(40, 167, 69, 0.1);
+        color: var(--success);
+      }
+
+      .status-followup {
+        background-color: rgba(220, 53, 69, 0.1);
+        color: var(--danger);
+      }
+
+      /* Empty State */
+      .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: var(--secondary);
+      }
+
+      .empty-state i {
+        font-size: 48px;
+        margin-bottom: 16px;
+        color: #dee2e6;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .patient-info-card {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .patient-meta {
+          justify-content: center;
+        }
+
+        .report-header {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .report-meta {
+          flex-wrap: wrap;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <div class="header">
+        <h1 class="page-title">
+          <i class="fas fa-file-medical"></i> Patient Reports
+        </h1>
+        <button class="back-btn" onclick="window.history.back()">
+          <i class="fas fa-arrow-left"></i> Back to Consultation
+        </button>
+      </div>
+
+      <!-- Patient Info Card -->
+      <div class="patient-info-card" *ngIf="patient">
+        <div class="patient-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+
+        <div class="patient-details">
+          <h2>{{ patient.name }}</h2>
+
+          <div class="patient-meta">
+            <div class="meta-item">
+              <i class="fas fa-id-card"></i>
+              <span>ID: {{ patient.patientId }}</span>
+            </div>
+
+            <div class="meta-item">
+              <i class="fas fa-birthday-cake"></i>
+              <span>Age: {{ patient.age }}</span>
+            </div>
+
+            <div class="meta-item">
+              <i class="fas fa-envelope"></i>
+              <span>Email: {{ patient.email }}</span>
+            </div>
+
+            <div class="meta-item">
+              <i class="fas fa-phone"></i>
+              <span>Contact: {{ patient.number }}</span>
+            </div>
+
+            <div class="meta-item">
+              <i class="fas fa-calendar-alt"></i>
+              <span>Last Visit: {{ patient.lastVisit | date }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="quick-stats">
+        <div class="stat-card">
+          <div class="stat-value">8</div>
+          <div class="stat-label">Total Reports</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">6</div>
+          <div class="stat-label">Completed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">2</div>
+          <div class="stat-label">Follow-up Required</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">3</div>
+          <div class="stat-label">This Year</div>
+        </div>
+      </div>
+
+      <!-- Reports List -->
+      <div class="reports-list">
+        <!-- Report Item 1 -->
+        <div class="report-item" onclick="openReport(1)">
+          <div class="report-header">
+            <div class="report-title">Blood Test Results</div>
+            <span class="report-type">Laboratory</span>
+          </div>
+          <div class="report-meta">
+            <div class="meta-item">
+              <i class="fas fa-calendar"></i>
+              <span>Nov 15, 2023</span>
+            </div>
+            <div class="meta-item">
+              <i class="fas fa-user-md"></i>
+              <span>Dr. Sarah Johnson</span>
+            </div>
+            <div class="status-badge status-completed">Completed</div>
+          </div>
+          <p class="report-summary">
+            Blood work shows elevated cholesterol levels. LDL at 145 mg/dL, HDL
+            at 42 mg/dL. Recommended dietary changes and follow-up in 3 months.
+          </p>
+        </div>
+
+        <!-- Report Item 2 -->
+        <div class="report-item" onclick="openReport(2)">
+          <div class="report-header">
+            <div class="report-title">Cardiology Consultation</div>
+            <span class="report-type">Consultation</span>
+          </div>
+          <div class="report-meta">
+            <div class="meta-item">
+              <i class="fas fa-calendar"></i>
+              <span>Oct 28, 2023</span>
+            </div>
+            <div class="meta-item">
+              <i class="fas fa-user-md"></i>
+              <span>Dr. Sarah Johnson</span>
+            </div>
+            <div class="status-badge status-completed">Completed</div>
+          </div>
+          <p class="report-summary">
+            Routine cardiology follow-up. EKG shows normal sinus rhythm. Blood
+            pressure slightly elevated at 142/88 mmHg.
+          </p>
+        </div>
+
+        <!-- Report Item 3 -->
+        <div class="report-item" onclick="openReport(3)">
+          <div class="report-header">
+            <div class="report-title">Chest X-Ray</div>
+            <span class="report-type">Radiology</span>
+          </div>
+          <div class="report-meta">
+            <div class="meta-item">
+              <i class="fas fa-calendar"></i>
+              <span>Sep 10, 2023</span>
+            </div>
+            <div class="meta-item">
+              <i class="fas fa-user-md"></i>
+              <span>Dr. Robert Kim</span>
+            </div>
+            <div class="status-badge status-completed">Completed</div>
+          </div>
+          <p class="report-summary">
+            Chest X-ray shows clear lungs with no signs of infection or
+            abnormalities. Heart size appears normal.
+          </p>
+        </div>
+
+        <!-- Report Item 4 -->
+        <div class="report-item" onclick="openReport(4)">
+          <div class="report-header">
+            <div class="report-title">Annual Physical Exam</div>
+            <span class="report-type">Check-up</span>
+          </div>
+          <div class="report-meta">
+            <div class="meta-item">
+              <i class="fas fa-calendar"></i>
+              <span>Jun 22, 2023</span>
+            </div>
+            <div class="meta-item">
+              <i class="fas fa-user-md"></i>
+              <span>Dr. Sarah Johnson</span>
+            </div>
+            <div class="status-badge status-followup">Follow-up Required</div>
+          </div>
+          <p class="report-summary">
+            Comprehensive physical examination. Overall good health. Recommended
+            weight management and increased physical activity.
+          </p>
+        </div>
+
+        <!-- Report Item 5 -->
+        <div class="report-item" onclick="openReport(5)">
+          <div class="report-header">
+            <div class="report-title">MRI Scan - Lumbar Spine</div>
+            <span class="report-type">Imaging</span>
+          </div>
+          <div class="report-meta">
+            <div class="meta-item">
+              <i class="fas fa-calendar"></i>
+              <span>Mar 15, 2023</span>
+            </div>
+            <div class="meta-item">
+              <i class="fas fa-user-md"></i>
+              <span>Dr. Amanda Lee</span>
+            </div>
+            <div class="status-badge status-completed">Completed</div>
+          </div>
+          <p class="report-summary">
+            MRI of lumbar spine shows mild disc degeneration at L4-L5. No
+            significant nerve compression observed.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Function to open a report (in a real app, this would open the full report)
+      function openReport(reportId) {
+        alert(
+          `Opening report #${reportId} - This would show the full report details in a real application`
+        );
+
+        // In a real application, you would:
+        // 1. Fetch the full report data
+        // 2. Open a modal or navigate to a detailed report page
+        // 3. Display the complete report information
+      }
+
+      // Simple search functionality (could be added if needed)
+      document.addEventListener("keydown", function (e) {
+        // Ctrl+F for search (common shortcut)
+        if (e.ctrlKey && e.key === "f") {
+          e.preventDefault();
+          const searchTerm = prompt("Search in reports:");
+          if (searchTerm) {
+            searchReports(searchTerm);
+          }
+        }
+      });
+
+      function searchReports(term) {
+        const reportItems = document.querySelectorAll(".report-item");
+        let found = false;
+
+        reportItems.forEach((item) => {
+          const text = item.textContent.toLowerCase();
+          if (text.includes(term.toLowerCase())) {
+            item.style.backgroundColor = "var(--primary-light)";
+            item.scrollIntoView({ behavior: "smooth", block: "center" });
+            found = true;
+          } else {
+            item.style.backgroundColor = "";
+          }
+        });
+
+        if (!found) {
+          alert("No reports found matching your search.");
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -9,6 +9,7 @@ import { AddPatientComponent } from './add-patient/add-patient.component';
 import { AddPrescriptionComponent } from './add-prescription/add-prescription.component';
 import { AppointmentFormComponent } from './appointment-form/appointment-form.component';
 import { ConsultationComponent } from './consultation/consultation.component';
+import { ReportsComponent } from './reports/reports.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -19,8 +20,8 @@ const routes: Routes = [
   { path: 'docdash', component: DocdashComponent },
   { path: 'consultation', component: ConsultationComponent },
   { path: 'add', component: ConsultationComponent },
-{ path: 'consultation/:patientId', component: ConsultationComponent },
-
+  { path: 'consultation/:patientId', component: ConsultationComponent },
+  { path: 'past-reports/:patientId', component: ReportsComponent },
   { path: 'add-patient', component: AddPatientComponent },
   { path: 'add-prescription', component: AddPrescriptionComponent },
   { path: 'appointment-form', component: AppointmentFormComponent }, // ✅ fixed

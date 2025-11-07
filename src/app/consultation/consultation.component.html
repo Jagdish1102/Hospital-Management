@@ -372,6 +372,65 @@
         transition: var(--transition);
       }
 
+      .status-section {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        background: #f8faff;
+        border: 1px solid #dce3f0;
+        border-radius: 6px;
+        padding: 3px 6px;
+        box-shadow: 0 2px 6px #1e62d9;
+        max-width: 300px;
+        transition: all 0.3s ease;
+      }
+
+      .status-section:hover {
+        box-shadow: 0 3px 10px #1e62d9;
+      }
+
+      .status-section label {
+        font-size: 15px;
+        color: #333;
+        font-weight: 400;
+        margin: 0;
+      }
+
+      .status-dropdown {
+        flex: 1;
+        padding: 4px 6px;
+        font-size: 14px;
+        border-radius: 4px;
+        border: 1px solid #bfc8dc;
+        background: #fff;
+        color: #1e62d9;
+        cursor: pointer;
+        transition: border-color 0.3s, box-shadow 0.3s;
+        outline: none;
+      }
+
+      .status-dropdown:hover {
+        border-color: #007bff;
+      }
+
+      .status-dropdown:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+      }
+
+      /* Optional: Color feedback by status */
+      .status-dropdown option[value="Admitted"] {
+        color: #17a2b8;
+      }
+
+      .status-dropdown option[value="Under Treatment"] {
+        color: #ffc107;
+      }
+
+      .status-dropdown option[value="Discharged"] {
+        color: #28a745;
+      }
+
       .add-btn:hover {
         background-color: #1e62d9;
       }
@@ -479,6 +538,30 @@
         margin-top: 24px;
       }
 
+      .history-title {
+        display: flex;
+        align-items: center;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+      }
+
+      .history-title i {
+        margin-right: 8px;
+        color: #007bff;
+      }
+
+      .past-reports-link {
+        text-decoration: none;
+        color: #007bff;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .past-reports-link:hover {
+        color: #0056b3;
+        text-decoration: underline;
+      }
+
       .save-btn {
         background-color: var(--primary);
         color: white;
@@ -565,9 +648,26 @@
         <div class="patient-info" *ngIf="patient">
           <div class="patient-details">
             <h2>{{ patient?.name }}</h2>
+
             <div class="patient-meta">
               <span>Age: {{ patient?.age }}</span>
-              <span class="condition-tag">{{ patient?.status }}</span>
+              <span>Blood Group: {{ patient?.bloodGroup }}</span>
+
+              <!-- 🔽 Status Update Section -->
+              <div class="status-section">
+                <label for="statusSelect"><strong>Status:</strong></label>
+
+                <select
+                  id="statusSelect"
+                  [(ngModel)]="patient.status"
+                  (change)="updateStatus(patient.patientId, patient.status)"
+                  class="status-dropdown"
+                >
+                  <option value="Admitted">Admitted</option>
+                  <option value="Under Treatment">Under Treatment</option>
+                  <option value="Discharged">Discharged</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
@@ -606,27 +706,31 @@
           </div>
         </div>
         <div class="details-section">
-          <h3><i class="fas fa-stethoscope"></i> Visit Reason & Symptoms</h3>
+          <h3>
+            <i class="fas fa-stethoscope" *ngIf="patient"></i> Visit Reason &
+            Symptoms
+          </h3>
           <div class="symptoms-list">
-            <span class="symptom-tag">Fever</span>
-            <span class="symptom-tag">Headache</span>
-            <span class="symptom-tag">Fatigue</span>
-            <span class="symptom-tag">Cough</span>
+            <span class="symptom-tag">{{ patient.symtomps }}</span>
           </div>
 
           <h3><i class="fas fa-history"></i> Medical History Preview</h3>
           <div class="history-preview">
             <div class="history-item">
-              <span>Annual Checkup</span>
-              <span>June 12, 2023</span>
+              <span>Last Visit</span>
+              <span>{{ patient.lastVisit }}</span>
             </div>
-            <div class="history-item">
-              <span>Flu Vaccination</span>
-              <span>October 5, 2022</span>
-            </div>
-            <div class="history-item">
-              <span>Allergy Consultation</span>
-              <span>March 18, 2022</span>
+            <div class="history-preview">
+              <h4 class="history-title">
+                <i class="fas fa-file-medical"></i>
+
+                <a
+                  [routerLink]="['/past-reports', patient.patientId]"
+                  class="past-reports-link"
+                >
+                  View Past Reports
+                </a>
+              </h4>
             </div>
           </div>
         </div>
