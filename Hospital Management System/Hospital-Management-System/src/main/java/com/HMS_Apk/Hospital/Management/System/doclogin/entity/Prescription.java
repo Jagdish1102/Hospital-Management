@@ -4,6 +4,9 @@ package com.HMS_Apk.Hospital.Management.System.doclogin.entity;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.HMS_Apk.Hospital.Management.System.entity.Patient;
 
 @Entity
@@ -21,6 +24,7 @@ public class Prescription {
 
     @ManyToOne
     @JoinColumn(name = "patientId", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Patient patient;
 
     public Prescription() {

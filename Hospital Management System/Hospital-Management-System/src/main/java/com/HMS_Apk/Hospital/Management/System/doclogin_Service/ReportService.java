@@ -1,6 +1,7 @@
 package com.HMS_Apk.Hospital.Management.System.doclogin_Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,11 @@ public class ReportService {
         return reportRepository.findByStatus(status);
     }
 
-    public void deleteReport(Long id) {
-        reportRepository.deleteById(id);
+    public void deleteReport(Long reportId) {
+        reportRepository.deleteById(reportId);
+    }
+    
+    public Optional<Report> getReportByPatientId(Long patientId) {
+    	return reportRepository.findById(patientId);
     }
 }

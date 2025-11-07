@@ -1,6 +1,7 @@
 package com.HMS_Apk.Hospital.Management.System.doclogin_Controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,9 +41,15 @@ public class ReportController {
     }
 
     // Delete a report
-    @DeleteMapping("/{id}")
-    public void deleteReport(@PathVariable Long id) {
-        reportService.deleteReport(id);
+    @DeleteMapping("/{reportId}")
+    public void deleteReport(@PathVariable Long reportId) {
+        reportService.deleteReport(reportId);
     }
+    
+    @GetMapping("/patient/{patientId}")
+    public Optional<Report> getReportByPatientId(@PathVariable Long patientId) {
+        return reportService.getReportByPatientId(patientId);
+    }
+
 }
 

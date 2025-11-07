@@ -5,6 +5,9 @@ import com.HMS_Apk.Hospital.Management.System.Repository.PatientRepository;
 import com.HMS_Apk.Hospital.Management.System.doclogin.entity.Prescription;
 import com.HMS_Apk.Hospital.Management.System.doclogin_Repository.PrescriptionRepository;
 import com.HMS_Apk.Hospital.Management.System.entity.Patient;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,6 +43,22 @@ public class PrescriptionService {
             return true;
         }
         return false;
+    }
+    @Transactional
+    public boolean deletePatient(Long patientId) {
+        // Check if the patient exists
+        if (patientRepository.existsById(patientId)) {
+
+            // Step 1: Delete all prescriptions linked to this patient
+            prescriptionRepository.deleteByPatientId(patientId);
+
+            // Step 2: Delete the patient itself
+            patientRepository.deleteById(patientId);
+
+            return true;
+        } else {
+            return false; // Patient not found
+        }
     }
 
 }

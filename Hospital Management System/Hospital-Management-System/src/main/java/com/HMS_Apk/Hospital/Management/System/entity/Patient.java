@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.JoinColumnOrFormula;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "patients")
 public class Patient {
@@ -21,6 +23,7 @@ public class Patient {
 	private String condition;
 
 	@Column(name = "last_visit")
+	@JsonFormat(pattern = "yyyy-MM-dd  HH:mm:ss")
 	private LocalDateTime lastVisit;
 
 	@Column(name = "email")

@@ -8,6 +8,9 @@ import com.HMS_Apk.Hospital.Management.System.doclogin.entity.Prescription;
 
 public interface PrescriptionRepository extends JpaRepository<Prescription, Long> {
     List<Prescription> findByPatientId(Long patientId);
+
+	void deleteByPatientId(Long patientId);
+    
    
 
 }

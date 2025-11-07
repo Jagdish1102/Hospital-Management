@@ -32,15 +32,20 @@ public class PrescriptionController {
         return ResponseEntity.ok(prescriptionService.getPrescriptions(patientId));
     }
     
-    @DeleteMapping("/prescriptions/{id}")
-    public ResponseEntity<String> deletePrescription(@PathVariable Long id) {
-        boolean deleted = prescriptionService.deletePrescription(id);
-        if (deleted) {
-            return ResponseEntity.ok("Prescription deleted successfully!");
-        } else {
-            return ResponseEntity.status(404).body("Prescription not found with ID: " + id);
+    @DeleteMapping("/patients/{patientId}")
+    public ResponseEntity<String> deletePatient(@PathVariable Long patientId) {
+        try {
+            boolean deleted = prescriptionService.deletePatient(patientId);
+            if (deleted) {
+                return ResponseEntity.ok("Patient and related prescriptions deleted successfully!");
+            } else {
+                return ResponseEntity.status(404).body("Patient not found with ID: " + patientId);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error deleting patient: " + e.getMessage());
         }
     }
+
 
     
 }
