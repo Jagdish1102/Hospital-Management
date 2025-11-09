@@ -6,18 +6,17 @@ import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-appointment',
-    standalone: false,
+  standalone: false,
   templateUrl: './create-appointment.component.html',
-  styleUrls: ['./create-appointment.component.css']
+  styleUrls: ['./create-appointment.component.css'],
 })
-
 export class CreateAppointmentComponent {
   appointment: Appointment = new Appointment();
 
   constructor(
     private appointmentService: AppointmentService,
     private router: Router,
-    private Location:Location
+    private Location: Location
   ) {}
 
   saveAppointments() {
@@ -28,17 +27,17 @@ export class CreateAppointmentComponent {
       },
       error: (err: any) => {
         console.error('Error creating appointment:', err);
-      }
+      },
     });
   }
 
   onSubmit() {
     this.saveAppointments();
   }
-  getnavigate(){
-     this.router.navigate(['/appointmentlist']);  // Optional navigation
+  getnavigate() {
+    this.router.navigate(['/appointmentlist']); // Optional navigation
   }
-  goBack(){
+  goBack() {
     this.Location.back();
   }
 }

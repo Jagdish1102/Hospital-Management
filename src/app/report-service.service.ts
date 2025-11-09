@@ -18,9 +18,7 @@ export class ReportService {
   // getReportByPatientId(patientId:number):Observable<Report>{
   //   return this.http.get<Report>(`${this.baseURL}/patient/${patientId}`);
   // }
-  getReportByPatientId(patientId: number): Observable<any> {
-    return this.http.get(
-      `http://localhost:8080/api/reports/patient/${patientId}`
-    );
-  }
+ countReportsByDoctorId(doctorId: number): Observable<number> {
+  return this.http.get<number>(`${this.baseURL}/doctor/${doctorId}/count`);
+}
 }
