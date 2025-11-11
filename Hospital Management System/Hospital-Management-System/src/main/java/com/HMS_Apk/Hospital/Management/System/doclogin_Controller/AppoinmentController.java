@@ -85,6 +85,9 @@ public class AppoinmentController {
         Patient patient = new Patient();
         patient.setName(appointment.getName());
         patient.setAge(appointment.getAge());
+        patient.setEmail(appointment.getEmail());
+        patient.setNumber(appointment.getNumber());
+        patient.setaddress(appointment.getAddress());
         patient.setSymtomps(appointment.getSymtomps());
       // add if Patient has this field
              // add if needed

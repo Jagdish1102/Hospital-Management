@@ -33,4 +33,9 @@ public class ReportService {
     public Optional<Report> getReportByPatientId(Long patientId) {
     	return reportRepository.findById(patientId);
     }
+    
+    
+    public List<Report> countReportsByDoctorId(Long doctorId) {
+        return reportRepository.countReportByDoctorId(doctorId);
+    }
 }

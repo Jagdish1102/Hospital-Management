@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,6 +50,11 @@ public class ReportController {
     @GetMapping("/patient/{patientId}")
     public Optional<Report> getReportByPatientId(@PathVariable Long patientId) {
         return reportService.getReportByPatientId(patientId);
+    }
+    
+    @GetMapping("/count/{doctorId}")
+    public List<Report> getReportCountByDoctor(@PathVariable Long doctorId) {
+       return reportService.countReportsByDoctorId(doctorId);
     }
 
 }

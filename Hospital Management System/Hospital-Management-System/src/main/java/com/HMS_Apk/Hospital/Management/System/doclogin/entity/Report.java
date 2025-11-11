@@ -2,11 +2,17 @@ package com.HMS_Apk.Hospital.Management.System.doclogin.entity;
 
 import java.time.LocalDateTime;
 
+import com.HMS_Apk.Hospital.Management.System.entity.Doctor;
+import com.HMS_Apk.Hospital.Management.System.entity.Patient;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,6 +22,7 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reportId")
      private Long reportId;
+    
 
     private String patientName;
     private String reportType;     // e.g. "Blood Test", "X-Ray"
@@ -23,10 +30,20 @@ public class Report {
     private String status;         // e.g. "Urgent", "Normal", "Pending Review"
     private LocalDateTime reportDate;
     
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    @JsonIgnoreProperties({"reports"})
+    private Patient patient;
+    
+    
+    @ManyToOne
+    @JoinColumn(name = "doctorId")
+    private Doctor doctor;
     
     
     
-	public Report(Long id, String patientName, String reportType, String description, String status,
+    
+	public Report(Long id, String patientName,Doctor doctor,Patient patient, String reportType, String description, String status,
 			LocalDateTime reportDate) {
 		super();
 		this.reportId = id;
@@ -35,6 +52,8 @@ public class Report {
 		this.description = description;
 		this.status = status;
 		this.reportDate = reportDate;
+		this.patient=patient;
+		this.doctor=doctor;
 	}
     
 	public Report() {
@@ -43,6 +62,14 @@ public class Report {
 
 	public Long getId() {
 		return reportId;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 
 	public void setId(Long id) {

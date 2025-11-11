@@ -27,13 +27,14 @@ public class Appointment {
 	private LocalDate date;
 	private LocalTime time;
 	private String email;
+	private String address;
 
 	public Appointment() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public Appointment(long id, String name, String age, String symtomps, String number, String lastVisit,
-			LocalDate date, LocalTime time,String status,String email) {
+			LocalDate date, LocalTime time,String status,String email,String address) {
 		super();
 		this.appointmentId = id;
 		this.name = name;
@@ -45,6 +46,15 @@ public class Appointment {
 		this.time = time;
 		this.status=status;
 		this.email=email;
+		this.address=address;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public long getAppointmentId() {
