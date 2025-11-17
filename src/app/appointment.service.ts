@@ -52,4 +52,8 @@ export class AppointmentService {
   manageAppointment(id: number): Observable<any> {
     return this.http.post(`${this.baseUrl}/manage/${id}`, {});
   }
+
+   getTodayAppointments(): Observable<number> {
+    return this.http.get<number>(`${this.baseUrl}/todayAppointments`);
+  }
 }

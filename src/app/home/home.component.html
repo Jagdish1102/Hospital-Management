@@ -106,48 +106,118 @@
         left: 0;
         color: #0d6efd;
       }
+
+      .navbar {
+        height: 64px;
+        line-height: 1;
+      }
+
+      .navbar-brand img {
+        object-fit: cover;
+      }
+
+      .nav-link {
+        font-weight: 500;
+        color: #f8f9fa !important;
+        margin-right: 0.5rem;
+        transition: color 0.2s ease;
+      }
+
+      .nav-link:hover {
+        color: #d1ecf1 !important;
+      }
+
+      .btn-outline-light {
+        border-width: 1.5px;
+        font-weight: 500;
+      }
+
+      .dropdown-menu {
+        border-radius: 0.5rem;
+      }
+
+      .btn-outline-light {
+        border-radius: 30px;
+        border-width: 1.5px;
+        font-weight: 500;
+        transition: 0.3s;
+      }
+
+      .btn-outline-light:hover {
+        background-color: #ffffff;
+        color: #0d6efd;
+      }
+
+      .dropdown-menu {
+        border-radius: 10px;
+        min-width: 180px;
+        padding: 8px 0;
+      }
+
+      .dropdown-item {
+        font-weight: 500;
+        padding: 8px 16px;
+      }
     </style>
   </head>
   <body>
     <!-- Fixed Top Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="#">
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top shadow-sm"
+    >
+      <div class="container-fluid px-4">
+        <!-- Brand -->
+        <a class="navbar-brand d-flex align-items-center" routerLink="/">
           <img
-            src="assets\sign.png"
-            alt="MediCare Hospital Logo"
-            class="me-2"
-            height="40"
+            src="assets/sign.png"
+            alt="Kanak Hospital Logo"
+            height="36"
+            class="me-2 rounded-circle"
           />
-          <span class="fw-bold">Kanak Hospital</span>
+          <span class="fw-semibold fs-5">Kanak Hospital</span>
         </a>
+
+        <!-- Toggle for Mobile -->
         <button
           class="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
+
+        <!-- Links -->
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav align-items-center">
             <li class="nav-item">
-              <a class="nav-link active" href="#">Home</a>
+              <a class="nav-link active" routerLink="/">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
+              <a class="nav-link" routerLink="/about">About</a>
             </li>
+
+            <!-- Departments Dropdown -->
             <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
                 id="departmentsDropdown"
-                role="button"
                 data-bs-toggle="dropdown"
+                role="button"
               >
                 Departments
               </a>
-              <ul class="dropdown-menu">
+              <ul
+                class="dropdown-menu shadow-sm"
+                aria-labelledby="departmentsDropdown"
+              >
                 <li>
                   <a class="dropdown-item" href="#cardiology">Cardiology</a>
                 </li>
@@ -165,31 +235,53 @@
                 </li>
               </ul>
             </li>
+
             <li class="nav-item">
-              <a class="nav-link" href="#">Doctors</a>
+              <a class="nav-link" routerLink="/doctors">Doctors</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
+              <a class="nav-link" routerLink="/contact">Contact</a>
             </li>
-            <li class="nav-item ms-lg-2">
-              <a
-                href="#"
-                class="btn btn-light login-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#doctorLoginModal"
+
+            <!-- Login Dropdown -->
+            <li class="nav-item dropdown ms-lg-3">
+              <!-- Login Button -->
+              <button
+                class="btn btn-outline-light dropdown-toggle px-3 py-1 rounded-pill"
+                type="button"
+                id="loginDropdown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
               >
-                <i class="fas fa-user-md me-2"></i>Doctor Login
-              </a>
-            </li>
-            <li class="nav-item ms-lg-2">
-              <a
-                href="#"
-                class="btn btn-outline-light login-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#adminLoginModal"
+                <i class="fas fa-user me-2"></i> Login
+              </button>
+
+              <!-- Dropdown Menu -->
+              <ul
+                class="dropdown-menu dropdown-menu-end shadow-sm"
+                aria-labelledby="loginDropdown"
               >
-                <i class="fas fa-user-shield me-2"></i>Admin Login
-              </a>
+                <li>
+                  <a
+                    class="dropdown-item d-flex align-items-center"
+                    href="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#doctorLoginModal"
+                  >
+                    👨‍⚕️ <span class="ms-2">Doctor Login</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item d-flex align-items-center"
+                    href="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#adminLoginModal"
+                  >
+                    🛡️ <span class="ms-2">Admin Login</span>
+                  </a>
+                </li>
+              </ul>
             </li>
           </ul>
         </div>
@@ -353,7 +445,8 @@
             <!-- Book Appointment Button -->
             <a
               class="btn btn-primary btn-lg px-4"
-            routerLink="/appointment-form" [queryParams]="{from:'home'}"
+              routerLink="/appointment-form"
+              [queryParams]="{ from: 'home' }"
             >
               <i class="fas fa-calendar-check me-2"></i> Book Appointment
             </a>

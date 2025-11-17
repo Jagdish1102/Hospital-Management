@@ -162,42 +162,60 @@
     <!-- Main Content -->
     <div class="main-content">
       <!-- Header -->
-      <div class="dashboard-header">
-        <h2>Doctor Dashboard</h2>
+      <div
+        class="dashboard-header d-flex justify-content-between align-items-center"
+      >
+        <div>
+          <button class="btn btn-outline-primary" routerLink="/home">
+            <i class="fas fa-arrow-left me-2"></i> Back to Home
+          </button>
+        </div>
+
         <div class="d-flex align-items-center">
-          <div class="notification-badge me-4">
+          <div class="notification-badge me-4 position-relative">
             <i class="fas fa-bell fa-lg"></i>
-            <span class="badge bg-danger">3</span>
+            <span
+              class="badge bg-danger position-absolute top-0 start-100 translate-middle"
+              >3</span
+            >
           </div>
+
           <div class="dropdown">
             <button
-              class="btn btn-light dropdown-toggle"
+              class="btn btn-light dropdown-toggle d-flex align-items-center"
               type="button"
               id="userDropdown"
               data-bs-toggle="dropdown"
+              aria-expanded="false"
             >
               <img
                 src="https://ui-avatars.com/api/?name=Dr+Smith&background=2c6bac&color=fff"
-                class="patient-img me-2"
+                class="patient-img rounded-circle me-2"
+                width="35"
+                height="35"
+                alt="Doctor Avatar"
               />
               Dr. Smith
             </button>
-            <ul class="dropdown-menu dropdown-menu-end">
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="userDropdown"
+            >
               <li>
-                <a class="dropdown-item" href="#"
-                  ><i class="fas fa-user me-2"></i>Profile</a
-                >
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user me-2"></i> Profile
+                </a>
               </li>
               <li>
-                <a class="dropdown-item" href="#"
-                  ><i class="fas fa-cog me-2"></i>Settings</a
-                >
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-cog me-2"></i> Settings
+                </a>
               </li>
               <li><hr class="dropdown-divider" /></li>
               <li>
-                <a class="dropdown-item" href="#"
-                  ><i class="fas fa-sign-out-alt me-2"></i>Logout</a
-                >
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-sign-out-alt me-2"></i> Logout
+                </a>
               </li>
             </ul>
           </div>
@@ -209,125 +227,98 @@
         <div class="col-md-3">
           <div class="card card-stat">
             <i class="fas fa-user-injured"></i>
-            <div class="number">24</div>
+            <div class="number">{{patients.length}}</div>
             <div class="label">Total Patients</div>
           </div>
         </div>
         <div class="col-md-3">
           <div class="card card-stat">
             <i class="fas fa-calendar-check"></i>
-            <div class="number">8</div>
+            <div class="number">{{appointnments.length}}</div>
             <div class="label">Today's Appointments</div>
           </div>
         </div>
         <div class="col-md-3">
           <div class="card card-stat">
             <i class="fas fa-prescription"></i>
-            <div class="number">16</div>
+            <div class="number">{{todayPrescriptionCount }}</div>
             <div class="label">Prescriptions</div>
           </div>
         </div>
         <div class="col-md-3">
           <div class="card card-stat">
             <i class="fas fa-notes-medical"></i>
-            <div class="number">5</div>
+            <div class="number">{{pendingReportsCount }}</div>
             <div class="label">Pending Reports</div>
           </div>
         </div>
       </div>
-
-      <!-- Main Content Row -->
-      <div class="row">
-        <!-- Appointments Section -->
-        <div class="col-md-7">
-          <div class="card">
-            <div
-              class="card-header bg-white d-flex justify-content-between align-items-center"
-            >
-              <h5 class="mb-0">Recent Appointments</h5>
-              <button
-                class="btn btn-sm btn-outline-primary"
-                routerLink="/appointment-form"
-                [queryParams]="{ from: 'docdash' }"
+      <!-- Patients Section -->
+      <!-- 
+<div class="card">
+  <div class="card-header bg-white">
+    <h5 class="mb-0">Active Patients</h5>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Last Visit</th>
+            <th>Diagnosis</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let patient of patients">
+            <td>
+              <img
+                [src]="'https://ui-avatars.com/api/?name=' + patient.name + '&background=random'"
+                class="patient-img me-2"
+              />{{ patient.name }}
+            </td>
+            <td>{{ patient.age }}</td>
+            <td>{{ patient.lastVisit | date : 'yyyy-MM-dd' }}</td>
+            <td>{{ patient.condition }}</td>
+            <td>
+              <span
+                class="badge"
+                [ngClass]="{
+                  'bg-danger': patient.urgency === 'High',
+                  'bg-success': patient.urgency !== 'High'
+                }"
               >
-                <i class="fas fa-plus me-1"></i> New Appointment
+                {{ patient.urgency }}
+              </span>
+            </td>
+            <td>
+              <button
+                class="btn btn-sm btn-danger action-btn ms-2"
+                (click)="deletePatient(patient.patientId)"
+              >
+                <i class="fas fa-trash me-1"></i> Delete
               </button>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Age</th>
-                      <th>Date</th>
-                      <th>Time</th>
-                      <!-- <th>Status</th> -->
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- Loop through appointments -->
-                    <tr *ngFor="let appointment of appointnments">
-                      <td>
-                        <img
-                          [src]="
-                            'https://ui-avatars.com/api/?name=' +
-                            appointment.name +
-                            '&background=random'
-                          "
-                          class="patient-img me-2"
-                        />
-                        {{ appointment.name }}
-                      </td>
-                      <td>{{ appointment.age }}</td>
-                      <!-- <td>{{ appointment.date  | date: 'yyyy-MM-dd' }}</td> -->
-                      <td>{{ appointment.date }}</td>
-                      <td>
-                        {{ appointment.time }}
-                        <!-- <span
-                          class="badge"
-                          [ngClass]="{
-                            'bg-success':
-                              appointment.status.toLowerCase() === 'completed',
-                            'bg-warning':
-                              appointment.status.toLowerCase() === 'pending',
-                            'bg-danger':
-                              appointment.status.toLowerCase() === 'cancelled'
-                          }"
-                        >
-                          {{ appointment.status }}
-                        </span> -->
-                      </td>
-                      <td class="d-flex gap-5">
-                        <button
-                          class="btn btn-sm btn-success action-btn"
-                          (click)="manageAppointment(appointment.appointmentId)"
-                        >
-                          <i class="fas fa-cog me-1"></i> Manage
-                        </button>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-primary action-btn ms-2" [routerLink]="['/consultation',patient.patientId]"> 
+                <i class="fas fa-stethoscope me-1"></i> Start Consultation
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="patients.length === 0">
+            <td colspan="6" class="text-center text-muted">
+              No patients yet.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div> -->
 
-                        <button
-                          class="btn btn-sm btn-danger action-btn"
-                          (click)="deleteAppointment(appointment.appointmentId)"
-                        >
-                          <i class="fas fa-trash me-1"></i> Delete
-                        </button>
-                      </td>
-                    </tr>
-                    <!-- If no appointments -->
-                    <tr *ngIf="appointnments.length === 0">
-                      <td colspan="6" class="text-center text-muted">
-                        No appointments found.
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <!-- Patients Section -->
       <div class="card">
@@ -341,9 +332,9 @@
                 <tr>
                   <th>Name</th>
                   <th>Age</th>
-                  <th>Last Visit</th>
-                  <th>Diagnosis</th>
-                  <th>Status</th>
+                  <!-- <th>Last Visit</th>
+                  <th>Diagnosis</th> -->
+                  <!-- <th>Status</th> -->
                   <th>Action</th>
                 </tr>
               </thead>
@@ -360,10 +351,10 @@
                     />{{ patient.name }}
                   </td>
                   <td>{{ patient.age }}</td>
-                  <td>{{ patient.lastVisit | date : "yyyy-MM-dd" }}</td>
-                  <td>{{ patient.condition }}</td>
-                  <td>
-                    <span
+                  <!-- <td>{{ patient.lastVisit | date : "yyyy-MM-dd" }}</td> -->
+                  <!-- <td>{{ patient.condition }}</td> -->
+
+                  <!-- <span
                       class="badge"
                       [ngClass]="{
                         'bg-danger': patient.urgency === 'High',
@@ -371,8 +362,8 @@
                       }"
                     >
                       {{ patient.urgency }}
-                    </span>
-                  </td>
+                    </span> -->
+
                   <td>
                     <button
                       class="btn btn-sm btn-danger action-btn ms-2"
@@ -382,7 +373,10 @@
                     </button>
                   </td>
                   <td>
-                    <button class="btn btn-sm btn-primary action-btn ms-2" [routerLink]="['/consultation',patient.patientId]"> 
+                    <button
+                      class="btn btn-sm btn-primary action-btn ms-2"
+                      [routerLink]="['/consultation', patient.patientId]"
+                    >
                       <i class="fas fa-stethoscope me-1"></i> Start Consultation
                     </button>
                   </td>
@@ -406,36 +400,30 @@
         <div class="card-header bg-white">
           <h5 class="mb-0">Today's Schedule</h5>
         </div>
+        <!-- View All Button -->
+
         <div class="card-body">
-          <div class="schedule-item border-bottom pb-3 mb-3">
+          <!-- Loop through all patients -->
+          <div
+            class="schedule-item border-bottom pb-3 mb-3"
+            *ngFor="let appt of appointnments | slice : 0 : 5"
+          >
             <div class="d-flex justify-content-between">
-              <h6>Ramesh K - General Checkup</h6>
-              <span class="badge bg-primary">10:30 AM</span>
+              <h6>{{ appt.name }}</h6>
+              <span class="badge bg-primary">{{ appt.lastVisit }}</span>
             </div>
-            <p class="mb-0 text-muted">Fever and cough for 3 days</p>
+            <p class="mb-0 text-muted">{{ appt.symtomps }}</p>
           </div>
-          <div class="schedule-item border-bottom pb-3 mb-3">
-            <div class="d-flex justify-content-between">
-              <h6>Priya S - Consultation</h6>
-              <span class="badge bg-primary">11:15 AM</span>
-            </div>
-            <p class="mb-0 text-muted">Routine health checkup</p>
-          </div>
-          <div class="schedule-item border-bottom pb-3 mb-3">
-            <div class="d-flex justify-content-between">
-              <h6>Arun M - Follow-up</h6>
-              <span class="badge bg-primary">12:00 PM</span>
-            </div>
-            <p class="mb-0 text-muted">Diabetes management</p>
-          </div>
-          <div class="schedule-item">
-            <div class="d-flex justify-content-between">
-              <h6>Lunch Break</h6>
-              <span class="badge bg-secondary">1:00 PM</span>
-            </div>
-          </div>
+            <button
+          class="btn btn-sm btn-outline-primary"
+          routerLink="/appointmentlist"
+        >
+          View All
+        </button>
         </div>
+      
       </div>
+      <!-- View All Button -->
 
       <!-- Patient Statistics -->
       <div class="card">

@@ -13,9 +13,9 @@ export class PatientService {
     return this.httpClient.get<Patient[]>(`${this.baseUrl}`);
   }
 
-  deletePatient(patientId: number): Observable<any> {
-    return this.httpClient.delete(`${this.baseUrl}/patient/${patientId}`);
-  }
+ deletePatient(patientId: number): Observable<any> {
+  return this.httpClient.delete(`${this.baseUrl}/${patientId}`);
+}
   
   getPatientById(patientId: number): Observable<Patient> {
     return this.httpClient.get<Patient>(`${this.baseUrl}/${patientId}`);
@@ -25,4 +25,9 @@ export class PatientService {
   updatePatientStatus(patientId: number, status: string): Observable<any> {
     return this.httpClient.put(`${this.baseUrl}/updateStatus/${patientId}`, { status } ,{ responseType: 'text' });
   }
+
+   countTodayPatients(): Observable<Patient[]> {
+    return this.httpClient.get<Patient[]>(`${this.baseUrl}/patients`);
+  }
+
 }

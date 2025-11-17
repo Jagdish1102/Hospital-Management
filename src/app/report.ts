@@ -1,10 +1,13 @@
 export class Report {
   public reportId: number = 0;
+ 
   public patientName: string = '';
   public reportType: string = '';
   public description: string = '';
   public status: string = '';
   public reportDate: string = '';
+
+
 
   public patient: {
     patientId: number;

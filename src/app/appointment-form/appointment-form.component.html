@@ -40,6 +40,19 @@
         />
         <label for="age">Age</label>
       </div>
+      <!-- ----------------------------------------------------------------- -->
+      <div class="form-floating mb-3">
+        <input
+          type="address"
+          id="address"
+          name="address"
+          class="form-control"
+          required
+          [(ngModel)]="appointment.address"
+          placeholder="Enter your address"
+        />
+        <label for="address">Address</label>
+      </div>
 
       <!-- Symptoms -->
       <div class="form-floating mb-3">

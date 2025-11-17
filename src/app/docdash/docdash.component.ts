@@ -7,6 +7,8 @@ import { Report } from '../report';
 import { Router } from '@angular/router';
 import { AppointmentService } from '../appointment.service';
 import { Appointment } from '../appointment';
+import { PrescriptionService } from '../prescription.service';
+import { Prescription } from '../prescription';
 
 @Component({
   selector: 'app-docdash',
@@ -19,18 +21,26 @@ export class DocdashComponent {
     private patientService: PatientService,
     private reportService: ReportService,
     private appointmentService: AppointmentService,
-
+    private prescriptionService: PrescriptionService,
     private router: Router
   ) {}
 
   patients: Patient[] = [];
   reports: Report[] = [];
   appointnments: Appointment[] = [];
+  pendingReportsCount: number = 0;
+  todayPrescriptionCount: number = 0;
 
+prescriptions:Prescription[]=[];
+  
   ngOnInit(): void {
     this.getPatients();
     this.getReports();
     this.getappointment();
+    this.getTodayAppointments();
+    this.getPendingReports();
+    this.getTodayPrescriptionCount();
+
   }
   getPatients() {
     this.patientService.getPatientList().subscribe((data) => {
@@ -57,7 +67,6 @@ export class DocdashComponent {
       this.patientService.deletePatient(patientId).subscribe({
         next: () => {
           console.log('Deleted patient with ID:', patientId);
-          
           this.getPatients(); // refresh list
         },
         error: (err) => {
@@ -74,64 +83,56 @@ export class DocdashComponent {
     });
   }
 
-  loadAppointments(): void {
-    this.appointmentService.getAllAppointments().subscribe((data) => {
-      this.appointnments = data;
+  getTodayAppointments(): void {
+    this.appointmentService.getAllAppointments().subscribe({
+      next: (data: Appointment[]) => {
+        this.appointnments = data;
+        console.log('Appointments:', this.appointnments);
+      },
+      error: (err) => console.error(err),
+    });
+  }
+  countTodayPatients(): void {
+    this.patientService.countTodayPatients().subscribe({
+      next: (data: Patient[]) => {
+        this.patients = data;
+        console.log('patients:', this.patients);
+      },
+      error: (err) => console.error(err),
     });
   }
 
-  // manageAppointment(id: number): void {
-  //   this.appointmentService.manageAppointment(id).subscribe({
-  //     next: () => {
-  //       alert('Appointment moved to Patients successfully!');
-  //       this.loadAppointments();
-  //       this.getPatients(); // ✅ refresh patient list
-  //     },
-  //     error: (err) => {
-  //       console.error('Error managing appointment:', err);
-  //     },
-  //   });
-  // }
-
-
-  // manageAppointment(id: number): void {
-  // this.appointmentService.manageAppointment(id).subscribe({
-  //   next: (newPatient) => {
-      
-  //     // Remove the appointment from list
-  //     this.appointnments = this.appointnments.filter(a => a.id !== id);
-  //     alert("Appointment moved to Patients successfully!");
-
-  //     // Add the new patient to the patient list instantly
-  //     this.patients.push(newPatient);
-  //   },
-  //   error: err => {
-  //     console.error("Error managing appointment:", err);
-  //   }
-   // });
- // }
-
-
-
-//  manageAppointment(id: number): void {
-//   this.appointmentService.manageAppointment(id).subscribe({
-//     next: () => {
-//       this.getPatients();        // Reload patients from backend
-//       this.getappointment();    // Reload appointments from backend
-//     },
-//     error: (err) => console.error(err)
-//   });
-manageAppointment(id: number): void {
-  this.appointmentService.manageAppointment(id).subscribe({
-    next: () => {
-      this.getPatients();        // Reload patients from backend
-      this.getappointment();    // Reload appointments from backend
+getTodayPrescriptionCount(): void {
+  this.prescriptionService.getTodayPrescriptions().subscribe({
+    next: (count) => {
+      this.todayPrescriptionCount = count;
     },
-    error: (err) => console.error(err)
+    error: (err) => {
+      console.error("Error fetching today's prescriptions", err);
+      this.todayPrescriptionCount = 0;
+    }
   });
 }
 
 
+  getPendingReports(): void {
+    this.reportService.getPendingReports().subscribe({
+      next: (count: number) => {
+        this.pendingReportsCount = count; // directly set
+      },
+      error: () => (this.pendingReportsCount = 0),
+    });
+  }
+
+  manageAppointment(id: number): void {
+    this.appointmentService.manageAppointment(id).subscribe({
+      next: () => {
+        this.getPatients(); // Reload patients from backend
+        this.getappointment(); // Reload appointments from backend
+      },
+      error: (err) => console.error(err),
+    });
+  }
 
   deleteAppointment(id: number): void {
     this.appointmentService.deleteAppointment(id).subscribe({
@@ -149,9 +150,7 @@ manageAppointment(id: number): void {
     });
   }
 
-
-
-   updateStatus(patientId: number, status: string) {
+  updateStatus(patientId: number, status: string) {
     if (!patientId || !status) return;
 
     this.patientService.updatePatientStatus(patientId, status).subscribe({
@@ -161,7 +160,9 @@ manageAppointment(id: number): void {
       error: (err) => {
         console.error('Error updating status', err);
         alert('❌ Failed to update status!');
-      }
+      },
     });
   }
+
+  // ✔ FIXED
 }

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Prescription } from './prescription';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PrescriptionService {
   private baseURL = 'http://localhost:8080/api/v1/prescriptions';
@@ -12,8 +12,14 @@ export class PrescriptionService {
   constructor(private http: HttpClient) {}
 
   // ✅ Add prescription
-  addPrescription(patientId: number, prescription: Prescription): Observable<Prescription> {
-    return this.http.post<Prescription>(`${this.baseURL}/${patientId}`, prescription);
+  addPrescription(
+    patientId: number,
+    prescription: Prescription
+  ): Observable<Prescription> {
+    return this.http.post<Prescription>(
+      `${this.baseURL}/${patientId}`,
+      prescription
+    );
   }
 
   // ✅ Get prescriptions for a patient
@@ -21,8 +27,13 @@ export class PrescriptionService {
     return this.http.get<Prescription[]>(`${this.baseURL}/${patientId}`);
   }
 
-DeletePrescriptions(id: number): Observable<any> {
-  return this.http.delete(`${this.baseURL}/prescriptions/${id}`, { responseType: 'text' });
-}
+  DeletePrescriptions(id: number): Observable<any> {
+    return this.http.delete(`${this.baseURL}/prescriptions/${id}`, {
+      responseType: 'text',
+    });
+  }
 
+  getTodayPrescriptions(): Observable<number> {
+    return this.http.get<number>(`${this.baseURL}/today-count`);
+  }
 }
