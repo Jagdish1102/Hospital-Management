@@ -1,23 +1,4 @@
-// import { HttpClient } from '@angular/common/http';
-// import { Injectable } from '@angular/core';
-// import { Observable } from 'rxjs';
-// import { Appointment } from './appointment';
 
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class AppointmentService {
-
-//   constructor(private httpclint:HttpClient) { }
-//     private baseUrl = "http://localhost:8080/api/v2";
-//   getAllappointments():Observable<Appointment[]>{
-//     return this.httpclint.get<Appointment[]>(`${this.baseUrl}`)
-//   }
-//   createAppointment(appointment:Appointment):Observable<Appointment>{
-//     return this.httpclint.post<Appointment>(`${this.baseUrl}`,appointment);
-//   }
-
-// }
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -56,4 +37,18 @@ export class AppointmentService {
    getTodayAppointments(): Observable<number> {
     return this.http.get<number>(`${this.baseUrl}/todayAppointments`);
   }
+
+
+searchAppointments(keyword: string, page: number, size: number): Observable<any> {
+  return this.http.get<any>(`${this.baseUrl}/search`, {
+    params: {
+      keyword: keyword,
+      page: page,
+      size: size
+    }
+  });
+}
+
+
+  
 }

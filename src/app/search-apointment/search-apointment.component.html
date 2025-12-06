@@ -1,0 +1,14 @@
+<form class="d-flex" (submit)="search(); $event.preventDefault()">
+  <input
+    class="form-control me-2"
+    type="search"
+    placeholder="Search appointments"
+    [(ngModel)]="keyword"
+    name="keyword"
+    (keyup)="search()"
+  />
+
+  <button class="btn btn-light" type="button" (click)="search()">
+    Search
+  </button>
+</form>

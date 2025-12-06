@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AppointmentService } from '../appointment.service';
 import { Appointment } from '../appointment';
+import { SearchApointmentComponent } from '../search-apointment/search-apointment.component';
 
 @Component({
   selector: 'app-appointment',
@@ -59,6 +60,14 @@ export class AppointmentComponent {
 deleteAppointment(appointmentId: number) {
     this.appointnments = this.appointnments.filter(app => app.appointmentId !== appointmentId);
   }
+
+
+updateList(newData: any[]) {
+  this.appointnments = newData;
+}
+
+
+  
 }
 
 

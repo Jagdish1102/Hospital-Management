@@ -1,98 +1,838 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Hospital Admin</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarContent"
-      aria-controls="navbarContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Administration Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --primary-light: #e8f0fe;
+            --secondary: #34a853;
+            --accent: #00bcd4;
+            --warning: #f9ab00;
+            --danger: #ea4335;
+            --light: #f8f9fa;
+            --dark: #202124;
+            --gray: #5f6368;
+            --white: #ffffff;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
 
-    <div class="collapse navbar-collapse" id="navbarContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
-        </li>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
 
-        <li class="nav-item">
-          <a class="nav-link" href="appointmentlist">Appointments</a>
-        </li>
-        <!-- 
-        <li class="nav-item">
-          <a class="nav-link" href="#">Patients</a>
-        </li>
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-        <li class="nav-item">
-          <a class="nav-link" href="#">Doctors</a>
-        </li>
+        /* Layout */
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button"
-            data-bs-toggle="dropdown" aria-expanded="false">
-            Manage
-          </a> -->
-        <!-- <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Departments</a></li>
-            <li><a class="dropdown-item" href="#">Rooms</a></li>
-            <li><a class="dropdown-item" href="#">Medical Records</a></li>
-          </ul>
-        </li> -->
-      </ul>
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, var(--primary), #0d47a1);
+            color: white;
+            transition: var(--transition);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
 
-      <form class="d-flex" role="search">
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Search Patients"
-          aria-label="Search"
-        />
-        <button class="btn btn-light" type="submit">Search</button>
-      </form>
+        .sidebar-header {
+            padding: 24px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-header h1 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .menu-item {
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left-color: var(--accent);
+        }
+
+        .menu-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background-color: var(--white);
+            padding: 16px 24px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: var(--light);
+            border-radius: 24px;
+            padding: 8px 16px;
+            width: 300px;
+        }
+
+        .search-bar input {
+            border: none;
+            background: none;
+            outline: none;
+            margin-left: 8px;
+            width: 100%;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Dashboard Content */
+        .dashboard-content {
+            padding: 24px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .dashboard-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 24px;
+            transition: var(--transition);
+        }
+
+        .dashboard-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0d62d9;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-light);
+        }
+
+        /* Lists */
+        .item-list {
+            list-style: none;
+        }
+
+        .list-item {
+            padding: 14px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .item-meta {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-success {
+            background-color: rgba(52, 168, 83, 0.1);
+            color: var(--secondary);
+        }
+
+        .status-warning {
+            background-color: rgba(249, 171, 0, 0.1);
+            color: var(--warning);
+        }
+
+        .status-danger {
+            background-color: rgba(234, 67, 53, 0.1);
+            color: var(--danger);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            height: 250px;
+            margin-top: 10px;
+        }
+
+        /* Emergency Panel */
+        .emergency-panel {
+            background: linear-gradient(135deg, var(--danger), #c23321);
+            color: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .emergency-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .emergency-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -260px;
+                height: 100vh;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .search-bar {
+                width: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-bar {
+                width: 150px;
+            }
+            
+            .top-bar {
+                padding: 16px;
+            }
+            
+            .dashboard-content {
+                padding: 16px;
+            }
+            
+            .emergency-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-hospital-alt fa-2x"></i>
+                <h1>MediCare Admin</h1>
+            </div>
+            <div class="sidebar-menu">
+                <div class="menu-item active">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-user-injured"></i>
+                    <span>Patient Management</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-user-md"></i>
+                    <span>Staff Management</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span>Billing & Finance</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-pills"></i>
+                    <span>Pharmacy & Inventory</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Appointments</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-comment-medical"></i>
+                    <span>Communication</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Safety & Compliance</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search patients, staff, reports...">
+                    </div>
+                </div>
+                <div class="user-info">
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="user-avatar">AJ</div>
+                    <div>
+                        <div style="font-weight: 500;">Admin Johnson</div>
+                        <div style="font-size: 12px; color: var(--gray);">Hospital Administrator</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Emergency Panel -->
+                <div class="emergency-panel">
+                    <div class="emergency-header">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Emergency Status</h3>
+                    </div>
+                    <p>3 emergency cases in ER | 2 ICU beds available</p>
+                    <div class="emergency-actions">
+                        <button class="btn" style="background: white; color: var(--danger);">
+                            <i class="fas fa-user-md"></i> Assign Staff
+                        </button>
+                        <button class="btn" style="background: white; color: var(--danger);">
+                            <i class="fas fa-procedures"></i> Fast Admit
+                        </button>
+                        <button class="btn" style="background: white; color: var(--danger);">
+                            <i class="fas fa-bed"></i> Check Bed Availability
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-value">1,248</div>
+                                <div class="stat-label">Total Patients</div>
+                            </div>
+                            <div class="stat-icon" style="background-color: rgba(26, 115, 232, 0.1); color: var(--primary);">
+                                <i class="fas fa-user-injured"></i>
+                            </div>
+                        </div>
+                        <div style="font-size: 14px; color: var(--secondary);">
+                            <i class="fas fa-arrow-up"></i> 12% from last month
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-value">42</div>
+                                <div class="stat-label">Today's Admissions</div>
+                            </div>
+                            <div class="stat-icon" style="background-color: rgba(52, 168, 83, 0.1); color: var(--secondary);">
+                                <i class="fas fa-procedures"></i>
+                            </div>
+                        </div>
+                        <div style="font-size: 14px; color: var(--gray);">
+                            18 OPD | 24 IPD
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-value">$24,580</div>
+                                <div class="stat-label">Daily Revenue</div>
+                            </div>
+                            <div class="stat-icon" style="background-color: rgba(249, 171, 0, 0.1); color: var(--warning);">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                        </div>
+                        <div style="font-size: 14px; color: var(--secondary);">
+                            <i class="fas fa-arrow-up"></i> 8% from yesterday
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-value">87%</div>
+                                <div class="stat-label">Bed Occupancy</div>
+                            </div>
+                            <div class="stat-icon" style="background-color: rgba(234, 67, 53, 0.1); color: var(--danger);">
+                                <i class="fas fa-bed"></i>
+                            </div>
+                        </div>
+                        <div style="font-size: 14px; color: var(--danger);">
+                            12 ICU beds available
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Grid -->
+                <div class="dashboard-grid">
+                    <!-- Patient & Records Management -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Patient & Records Management</h3>
+                            <div class="card-actions">
+                                <button class="btn btn-outline">View All</button>
+                            </div>
+                        </div>
+                        <ul class="item-list">
+                            <li class="list-item">
+                                <div class="item-info">
+                                    <div class="item-title">Missing Documents</div>
+                                    <div class="item-meta">12 patient records incomplete</div>
+                                </div>
+                                <span class="status-badge status-warning">Action Needed</span>
+                            </li>
+                            <li class="list-item">
+                                <div class="item-info">
+                                    <div class="item-title">New Admissions Today</div>
+                                    <div class="item-meta">42 patients</div>
+                                </div>
+                                <span class="status-badge status-success">Updated</span>
+                            </li>
+                            <li class="list-item">
+                                <div class="item-info">
+                                    <div class="item-title">Discharge Approvals</div>
+                                    <div class="item-meta">8 pending approvals</div>
+                                </div>
+                                <span class="status-badge status-warning">Review</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Staff & Shift Management -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Staff & Shift Management</h3>
+                            <div class="card-actions">
+                                <button class="btn btn-outline">Schedule</button>
+                            </div>
+                        </div>
+                        <ul class="item-list">
+                            <li class="list-item">
+                                <div class="item-info">
+                                    <div class="item-title">On Duty Today</div>
+                                    <div class="item-meta">24 doctors, 58 nurses</div>
+                                </div>
+                                <span class="status-badge status-success">Active</span>
+                            </li>
+                            <li class="list-item">
+                                <div class="item-info">
+                                    <div class="item-title">Shift Changes</div>
+                                    <div class="item-meta">5 pending requests</div>
+                                </div>
+                                <span class="status-badge status-warning">Review</span>
+                            </li>
+                            <li class="list-item">
+                                <div class="item-info">
+                                    <div class="item-title">Absent Today</div>
+                                    <div class="item-meta">3 staff members</div>
+                                </div>
+                                <span class="status-badge status-danger">Alert</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Billing & Finance Panel -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Billing & Finance</h3>
+                            <div class="card-actions">
+                                <button class="btn btn-outline">Reports</button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                        <ul class="item-list">
+                            <li class="list-item">
+                                <div class="item-info">
+                                    <div class="item-title">Pending Insurance Claims</div>
+                                    <div class="item-meta">$42,800 pending</div>
+                                </div>
+                                <span class="status-badge status-warning">48 Claims</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Inventory & Pharmacy -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Inventory & Pharmacy</h3>
+                            <div class="card-actions">
+                                <button class="btn btn-outline">Orders</button>
+                            </div>
+                        </div>
+                        <ul class="item-list">
+                            <li class="list-item">
+                                <div class="item-info">
+                                    <div class="item-title">Low Stock Alert</div>
+                                    <div class="item-meta">8 medications below threshold</div>
+                                </div>
+                                <span class="status-badge status-danger">Urgent</span>
+                            </li>
+                            <li class="list-item">
+                                <div class="item-info">
+                                    <div class="item-title">Near Expiry</div>
+                                    <div class="item-meta">12 items expiring in 30 days</div>
+                                </div>
+                                <span class="status-badge status-warning">Monitor</span>
+                            </li>
+                            <li class="list-item">
+                                <div class="item-info">
+                                    <div class="item-title">Purchase Requests</div>
+                                    <div class="item-meta">5 pending approvals</div>
+                                </div>
+                                <span class="status-badge status-warning">Review</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Patient Flow & Appointments -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Patient Flow & Appointments</h3>
+                            <div class="card-actions">
+                                <button class="btn btn-outline">Calendar</button>
+                            </div>
+                        </div>
+                        <ul class="item-list">
+                            <li class="list-item">
+                                <div class="item-info">
+                                    <div class="item-title">Today's Appointments</div>
+                                    <div class="item-meta">124 scheduled</div>
+                                </div>
+                                <span class="status-badge status-success">On Track</span>
+                            </li>
+                            <li class="list-item">
+                                <div class="item-info">
+                                    <div class="item-title">Current Queue</div>
+                                    <div class="item-meta">18 patients waiting</div>
+                                </div>
+                                <span class="status-badge status-warning">Busy</span>
+                            </li>
+                            <li class="list-item">
+                                <div class="item-info">
+                                    <div class="item-title">Bed Availability</div>
+                                    <div class="item-meta">ICU: 12 free | General: 24 free</div>
+                                </div>
+                                <span class="status-badge status-success">Adequate</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Safety & Compliance -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Safety & Compliance</h3>
+                            <div class="card-actions">
+                                <button class="btn btn-outline">Reports</button>
+                            </div>
+                        </div>
+                        <ul class="item-list">
+                            <li class="list-item">
+                                <div class="item-info">
+                                    <div class="item-title">Infection Control</div>
+                                    <div class="item-meta">All zones compliant</div>
+                                </div>
+                                <span class="status-badge status-success">Passed</span>
+                            </li>
+                            <li class="list-item">
+                                <div class="item-info">
+                                    <div class="item-title">Fire Safety Check</div>
+                                    <div class="item-meta">Due in 5 days</div>
+                                </div>
+                                <span class="status-badge status-warning">Scheduled</span>
+                            </li>
+                            <li class="list-item">
+                                <div class="item-info">
+                                    <div class="item-title">Privacy Compliance</div>
+                                    <div class="item-meta">HIPAA audit completed</div>
+                                </div>
+                                <span class="status-badge status-success">Verified</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</nav>
-<table class="table table-striped">
-  <thead>
-  <tr>
-  <th>ID</th>
-  <th>Name</th>
-  <th>Condition</th>
-  <th>Last Visit</th>
-  <th>Status</th>
-  <th>Age</th>
-  <th>Blood Group</th>
-  <th>Prescription</th>
-  <th>Dose</th>
-  <th>Fees</th>
-  <th>Urgency</th>
-  <th>Action</th>
-</tr>
 
-  </thead>
-  <tbody>
-    <tr *ngFor="let patient of patients">
-      <td>{{ patient.patientId }}</td>
-      <td>{{ patient.name }}</td>
-      <td>{{ patient.condition }}</td>
-      <!-- <td>{{ patient.lastVisit | date : "short" }}</td> -->
-      <td>{{ patient.status }}</td>
-      <td>{{ patient.age }}</td>
-      <td>{{ patient.bloodGroup }}</td>
-      <td>{{ patient.prescription }}</td>
-      <td>{{ patient.dose }}</td>
-      <td>{{ patient.fees }}</td>
-      <td>{{ patient.urgency }}</td>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
 
-      <td>
-        <button (click)="delete(patient.patientId)" class="btn btn danger">
-          delete
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+        // Revenue Chart
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        const revenueChart = new Chart(revenueCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Daily Revenue ($)',
+                    data: [18500, 22500, 19800, 24580, 22000, 15200, 12800],
+                    borderColor: '#1a73e8',
+                    backgroundColor: 'rgba(26, 115, 232, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            drawBorder: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Sample data update (simulating real-time updates)
+        setInterval(() => {
+            // In a real application, this would fetch data from an API
+            console.log('Updating dashboard data...');
+        }, 30000);
+    </script>
+</body>
+</html>

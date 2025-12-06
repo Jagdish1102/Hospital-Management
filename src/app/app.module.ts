@@ -18,6 +18,7 @@ import { PatientFormComponent } from './patient-form/patient-form.component';
 import { PatientDetailsComponent } from './patient-details/patient-details.component';
 import { AppointmentFormComponent } from './appointment-form/appointment-form.component';
 import { ConsultationComponent } from './consultation/consultation.component';
+import { SearchApointmentComponent } from './search-apointment/search-apointment.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +35,7 @@ import { ConsultationComponent } from './consultation/consultation.component';
     PatientDetailsComponent,
     AppointmentFormComponent,
     ConsultationComponent,
+    SearchApointmentComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   bootstrap: [AppComponent],
