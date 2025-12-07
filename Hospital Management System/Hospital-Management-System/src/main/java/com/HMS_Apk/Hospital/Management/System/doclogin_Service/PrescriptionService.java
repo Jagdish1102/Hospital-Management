@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -59,6 +60,13 @@ public class PrescriptionService {
         } else {
             return false; // Patient not found
         }
+    }
+    
+    
+  
+    public long countTodayPrescriptions() {
+        LocalDate today = LocalDate.now();
+        return prescriptionRepository.countByDateIssued(today);
     }
 
 }
