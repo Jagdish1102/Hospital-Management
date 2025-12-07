@@ -737,24 +737,48 @@
       </div>
 
       <!-- Tabbed Section -->
+
       <div class="tabbed-section">
         <div class="tabs-header">
-          <div class="tab active" data-tab="notes">
+          <div
+            class="tab"
+            [class.active]="activeTab === 'notes'"
+            (click)="activeTab = 'notes'"
+          >
             <i class="fas fa-edit"></i> Consultation Notes
           </div>
-          <div class="tab" data-tab="prescriptions">
+
+          <div
+            class="tab"
+            [class.active]="activeTab === 'prescriptions'"
+            (click)="activeTab = 'prescriptions'"
+          >
             <i class="fas fa-pills"></i> Prescriptions
           </div>
-          <div class="tab" data-tab="tests">
+
+          <div
+            class="tab"
+            [class.active]="activeTab === 'tests'"
+            (click)="activeTab = 'tests'"
+          >
             <i class="fas fa-vial"></i> Test Recommendations
           </div>
-          <div class="tab" data-tab="report">
+
+          <div
+            class="tab"
+            [class.active]="activeTab === 'report'"
+            (click)="activeTab = 'report'"
+          >
             <i class="fas fa-file-medical"></i> Final Report
           </div>
         </div>
 
         <!-- Consultation Notes Tab -->
-        <div class="tab-content active" id="notes-tab">
+        <div
+          class="tab-content active"
+          [class.active]="activeTab === 'notes'"
+          id="notes-tab"
+        >
           <div class="text-editor">
             <div class="editor-toolbar">
               <button><i class="fas fa-bold"></i></button>
@@ -816,7 +840,11 @@
         </div>
 
         <!-- Prescriptions Tab -->
-        <div class="tab-content" id="prescriptions-tab">
+        <div
+          class="tab-content"
+          [class.active]="activeTab === 'prescriptions'"
+          id="prescriptions-tab"
+        >
           <div class="medicine-search">
             <input
               type="text"
@@ -873,7 +901,11 @@
         </div>
 
         <!-- Test Recommendations Tab -->
-        <div class="tab-content" id="tests-tab">
+        <div
+          class="tab-content"
+          [class.active]="activeTab === 'tests'"
+          id="tests-tab"
+        >
           <div class="test-selector">
             <select class="test-dropdown" id="test-select">
               <option>Select lab tests</option>
@@ -892,7 +924,11 @@
         </div>
 
         <!-- Final Report Tab -->
-        <div class="tab-content" id="report-tab">
+        <div
+          class="tab-content"
+          [class.active]="activeTab === 'report'"
+          id="report-tab"
+        >
           <div class="status-indicator">
             <span class="status-dot complete"></span>
             <span
@@ -919,9 +955,10 @@
 
       <!-- Action Buttons -->
       <div class="action-buttons">
-        <button class="save-btn">
+        <button class="save-btn" (click)="saveConsultation()">
           <i class="fas fa-save"></i> Save Consultation
         </button>
+
         <button class="finish-btn">
           <i class="fas fa-flag-checkered"></i> Finish Consultation
         </button>
@@ -929,32 +966,38 @@
     </div>
 
     <script>
-      // Tab switching functionality
-      document.querySelectorAll(".tab").forEach((tab) => {
-        tab.addEventListener("click", () => {
-          // Remove active class from all tabs and contents
-          document
-            .querySelectorAll(".tab")
-            .forEach((t) => t.classList.remove("active"));
-          document
-            .querySelectorAll(".tab-content")
-            .forEach((c) => c.classList.remove("active"));
+      // -----------------------------------------
+      // ⭐ TAB SWITCHING
+      // -----------------------------------------
+      document.addEventListener("DOMContentLoaded", function () {
+        const tabs = document.querySelectorAll(".tab");
+        const contents = document.querySelectorAll(".tab-content");
 
-          // Add active class to clicked tab
-          tab.classList.add("active");
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            // Remove active class
+            tabs.forEach((t) => t.classList.remove("active"));
+            contents.forEach((c) => c.classList.remove("active"));
 
-          // Show corresponding content
-          const tabId = tab.getAttribute("data-tab");
-          document.getElementById(`${tabId}-tab`).classList.add("active");
+            // Add active to clicked tab
+            tab.classList.add("active");
 
-          // If report tab is selected, generate the report
-          if (tabId === "report") {
-            generateReport();
-          }
+            // Show matching content
+            const tabId = tab.getAttribute("data-tab");
+            const contentSection = document.getElementById(`${tabId}-tab`);
+            if (contentSection) contentSection.classList.add("active");
+
+            // Auto-generate report if report tab clicked
+            if (tabId === "report") {
+              generateReport();
+            }
+          });
         });
       });
 
-      // Timer functionality (simplified)
+      // -----------------------------------------
+      // ⭐ TIMER
+      // -----------------------------------------
       let seconds = 0;
       let minutes = 12;
       let hours = 0;
@@ -970,128 +1013,126 @@
           hours++;
         }
 
-        const timerDisplay = `${hours.toString().padStart(2, "0")}:${minutes
-          .toString()
-          .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-        document.getElementById("timer").textContent = timerDisplay;
+        const timerDisplay =
+          `${hours.toString().padStart(2, "0")}:` +
+          `${minutes.toString().padStart(2, "0")}:` +
+          `${seconds.toString().padStart(2, "0")}`;
+
+        const timerEl = document.getElementById("timer");
+        if (timerEl) timerEl.textContent = timerDisplay;
       }
 
-      // Update timer every second
       setInterval(updateTimer, 1000);
 
-      // Report generation functionality
+      // -----------------------------------------
+      // ⭐ REPORT GENERATION
+      // -----------------------------------------
       function generateReport() {
-        const notes = document.getElementById("consultation-notes").innerText;
-        const diagnosis = document.getElementById("diagnosis-select").value;
-        const tests = document.getElementById("test-select").value;
+        const notes =
+          document.getElementById("consultation-notes")?.innerText || "";
+        const diagnosis =
+          document.getElementById("diagnosis-select")?.value ||
+          "Diagnosis pending";
+        const tests =
+          document.getElementById("test-select")?.value ||
+          "No tests recommended";
 
-        // Get prescription data
-        const prescriptionRows = document.querySelectorAll(
-          "#prescription-list tr"
-        );
+        // Prescriptions
         let prescriptionsHTML = "";
-        prescriptionRows.forEach((row) => {
+        document.querySelectorAll("#prescription-list tr").forEach((row) => {
           const cells = row.querySelectorAll("td");
           if (cells.length > 0) {
             prescriptionsHTML += `<li>${cells[0].textContent} - ${cells[1].textContent}, ${cells[2].textContent} for ${cells[3].textContent}</li>`;
           }
         });
 
-        // Get selected symptoms
+        // Symptoms
         const selectedSymptoms = [];
         document
           .querySelectorAll(".symptoms-checklist input:checked")
           .forEach((checkbox) => {
-            selectedSymptoms.push(checkbox.nextElementSibling.textContent);
+            selectedSymptoms.push(
+              checkbox.nextElementSibling.textContent.trim()
+            );
           });
 
-        // Generate current date
+        // Date
         const currentDate = new Date().toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",
           day: "numeric",
         });
 
-        // Build report HTML
+        // Build Report
         const reportHTML = `
-                <div class="report-section">
-                    <h4>Patient Information</h4>
-                    <p><strong>Name:</strong> Sarah Johnson</p>
-                    <p><strong>Age:</strong> 34</p>
-                    <p><strong>Gender:</strong> Female</p>
-                    <p><strong>Date of Consultation:</strong> ${currentDate}</p>
-                </div>
-                
-                <div class="report-section">
-                    <h4>Presenting Symptoms</h4>
-                    <ul>
-                        ${selectedSymptoms
-                          .map((symptom) => `<li>${symptom}</li>`)
-                          .join("")}
-                    </ul>
-                </div>
-                
-                <div class="report-section">
-                    <h4>Clinical Notes</h4>
-                    <p>${notes}</p>
-                </div>
-                
-                <div class="report-section">
-                    <h4>Diagnosis</h4>
-                    <p>${
-                      diagnosis !== "Select a suggested diagnosis"
-                        ? diagnosis
-                        : "Diagnosis pending"
-                    }</p>
-                </div>
-                
-                <div class="report-section">
-                    <h4>Prescribed Medications</h4>
-                    <ul>
-                        ${
-                          prescriptionsHTML ||
-                          "<li>No medications prescribed</li>"
-                        }
-                    </ul>
-                </div>
-                
-                <div class="report-section">
-                    <h4>Recommended Tests</h4>
-                    <p>${
-                      tests !== "Select lab tests"
-                        ? tests
-                        : "No tests recommended"
-                    }</p>
-                </div>
-                
-                <div class="report-section">
-                    <h4>Follow-up Instructions</h4>
-                    <p>Return if symptoms worsen or persist beyond 5 days. Maintain hydration and rest.</p>
-                </div>
-            `;
+        <div class="report-section">
+            <h4>Patient Information</h4>
+            <p><strong>Name:</strong> Sarah Johnson</p>
+            <p><strong>Age:</strong> 34</p>
+            <p><strong>Gender:</strong> Female</p>
+            <p><strong>Date of Consultation:</strong> ${currentDate}</p>
+        </div>
 
-        document.getElementById("report-content").innerHTML = reportHTML;
+        <div class="report-section">
+            <h4>Presenting Symptoms</h4>
+            <ul>${selectedSymptoms.map((s) => `<li>${s}</li>`).join("")}</ul>
+        </div>
+
+        <div class="report-section">
+            <h4>Clinical Notes</h4>
+            <p>${notes}</p>
+        </div>
+
+        <div class="report-section">
+            <h4>Diagnosis</h4>
+            <p>${diagnosis}</p>
+        </div>
+
+        <div class="report-section">
+            <h4>Prescribed Medications</h4>
+            <ul>
+              ${prescriptionsHTML || "<li>No medications prescribed</li>"}
+            </ul>
+        </div>
+
+        <div class="report-section">
+            <h4>Recommended Tests</h4>
+            <p>${tests}</p>
+        </div>
+
+        <div class="report-section">
+            <h4>Follow-up Instructions</h4>
+            <p>Return if symptoms worsen or persist beyond 5 days. Maintain hydration and rest.</p>
+        </div>
+    `;
+
+        const reportBox = document.getElementById("report-content");
+        if (reportBox) reportBox.innerHTML = reportHTML;
       }
 
-      // Add event listener for regenerate button
+      // -----------------------------------------
+      // ⭐ REGENERATE BUTTON
+      // -----------------------------------------
       document
         .getElementById("regenerate-report")
-        .addEventListener("click", generateReport);
+        ?.addEventListener("click", generateReport);
 
-      // Auto-generate report when page loads if on report tab
+      // -----------------------------------------
+      // ⭐ AUTO GENERATE REPORT IF TAB ALREADY ACTIVE
+      // -----------------------------------------
       document.addEventListener("DOMContentLoaded", function () {
-        // Check if we're on the report tab
         const reportTab = document.querySelector('.tab[data-tab="report"]');
         if (reportTab && reportTab.classList.contains("active")) {
           generateReport();
         }
       });
 
-      // Auto-save functionality (simulated)
-      setInterval(function () {
-        // In a real application, this would save data to the server
+      // -----------------------------------------
+      // ⭐ AUTO SAVE (SIMULATION)
+      // -----------------------------------------
+      setInterval(() => {
         console.log("Auto-saving consultation data...");
-      }, 30000); // Auto-save every 30 seconds
+      }, 30000);
     </script>
   </body>
 </html>

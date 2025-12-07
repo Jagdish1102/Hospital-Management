@@ -24,13 +24,16 @@ export class ConsultationService {
 
   getConsultationByPatientId(patientId: number): Observable<Consultation> {
     return this.http.get<Consultation>(
-      `${(this, this.baseUrl)}/patient/${patientId}}`
+      `${(this.baseUrl)}/patient/${patientId}}`
     );
   }
 
   getConsultationByDoctorId(doctorId:number):Observable<Consultation>{
 return this.http.get<Consultation>(`${this.baseUrl}/doctor/${doctorId}`);
   }
+addConsultation(patientId: number, doctorId: number, data: Consultation) {
+  return this.http.post<Consultation>(`${this.baseUrl}/add/${patientId}/${doctorId}`, data);
+}
 
   
 }

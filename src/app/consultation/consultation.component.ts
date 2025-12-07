@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Consultation } from '../consultation';
 import { ConsultationService } from '../consultation.service';
-import { Patient } from '../patient';
 import { PatientService } from '../patient.service';
 import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -13,13 +12,22 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './consultation.component.html',
   styleUrls: ['./consultation.component.css'],
 })
-export class ConsultationComponent implements OnInit {
+export class ConsultationComponent implements OnInit, OnDestroy {
+  
   consultations: Consultation[] = [];
-  patient: any; // ✅ single patient
+  patient: any;
+
   email!: string;
   number!: string;
   address!: string;
   symtomps!: string;
+
+  selectedPatientId!: number;
+  selectedDoctorId!: number;
+  consultation!: any;
+
+  // ✅ TAB HANDLING
+  activeTab: string = 'notes';
 
   constructor(
     private route: ActivatedRoute,
@@ -30,13 +38,16 @@ export class ConsultationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('patientId'); // ✅ get ID from URL
-    if (id) {
-      this.loadPatientById(Number(id));
-    }
+    const id = this.route.snapshot.paramMap.get('patientId');
+    if (id) this.loadPatientById(Number(id));
 
     this.getConsultations();
     this.startTimer();
+  }
+
+  // ✅ Switch Tab
+  setTab(tab: string) {
+    this.activeTab = tab;
   }
 
   getConsultations(): void {
@@ -59,6 +70,7 @@ export class ConsultationComponent implements OnInit {
     this.location.back();
   }
 
+  // ⏳ TIMER
   timer: string = '00:00:00';
   private seconds = 0;
   private interval: any;
@@ -84,11 +96,12 @@ export class ConsultationComponent implements OnInit {
     }
   }
 
+  // ✅ Update Patient Status
   updateStatus(patientId: number, status: string) {
     if (!patientId || !status) return;
 
     this.patientService.updatePatientStatus(patientId, status).subscribe({
-      next: (response) => {
+      next: () => {
         alert('✅ Status updated successfully!');
       },
       error: (err) => {
@@ -97,4 +110,19 @@ export class ConsultationComponent implements OnInit {
       },
     });
   }
+
+saveConsultation() {
+  this.consultationService
+    .addConsultation(this.selectedPatientId, this.selectedDoctorId, this.consultation)
+    .subscribe({
+      next: res => {
+        console.log("Saved:", res);
+        alert("Consultation Saved Successfully!");
+      },
+      error: err => console.log(err)
+    });
+}
+
+
+
 }
