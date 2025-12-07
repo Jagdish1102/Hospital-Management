@@ -15,4 +15,7 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
     // ✅ Correct query: Use r.doctor.doctorid (matches your Doctor entity)
     @Query("SELECT COUNT(r) FROM Report r WHERE r.doctor.doctorid = :doctorId")
     List<Report> countReportByDoctorId(@Param("doctorId") Long doctorId);
-}
+    
+    long countByStatus(String status);
+ 
+    }

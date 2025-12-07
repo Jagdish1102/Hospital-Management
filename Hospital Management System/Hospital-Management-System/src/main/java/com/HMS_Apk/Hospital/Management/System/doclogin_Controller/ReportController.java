@@ -56,6 +56,12 @@ public class ReportController {
     public List<Report> getReportCountByDoctor(@PathVariable Long doctorId) {
        return reportService.countReportsByDoctorId(doctorId);
     }
+    
+    // Count pending reports
+    @GetMapping("/pendingReports")
+    public long countPendingReports() {
+        return reportService.countPendingReports("Pending");
+    }
 
 }
 

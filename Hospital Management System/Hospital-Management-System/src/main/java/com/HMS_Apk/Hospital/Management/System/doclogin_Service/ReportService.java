@@ -38,4 +38,12 @@ public class ReportService {
     public List<Report> countReportsByDoctorId(Long doctorId) {
         return reportRepository.countReportByDoctorId(doctorId);
     }
+    
+    
+    
+    // Count pending reports
+  
+    public long countPendingReports(String string) {
+        return reportRepository.countByStatus("Pending");
+    }
 }

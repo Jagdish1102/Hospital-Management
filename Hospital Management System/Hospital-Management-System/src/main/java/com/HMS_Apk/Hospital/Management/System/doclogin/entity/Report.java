@@ -18,33 +18,30 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "report")
 public class Report {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reportId")
-     private Long reportId;
-    
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "reportId")
+	private Long reportId;
 
-    private String patientName;
-    private String reportType;     // e.g. "Blood Test", "X-Ray"
-    private String description;    // e.g. "CBC with Differential"
-    private String status;         // e.g. "Urgent", "Normal", "Pending Review"
-    private LocalDateTime reportDate;
-    
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
-    @JsonIgnoreProperties({"reports"})
-    private Patient patient;
-    
-    
-    @ManyToOne
-    @JoinColumn(name = "doctorId")
-    private Doctor doctor;
-    
-    
-    
-    
-	public Report(Long id, String patientName,Doctor doctor,Patient patient, String reportType, String description, String status,
-			LocalDateTime reportDate) {
+	private String patientName;
+	private String reportType; // e.g. "Blood Test", "X-Ray"
+	private String description; // e.g. "CBC with Differential"
+	private String status; // e.g. "Urgent", "Normal", "Pending Review"
+	private LocalDateTime reportDate;
+
+	
+
+	@ManyToOne
+	@JoinColumn(name = "patient_id")
+	@JsonIgnoreProperties({ "reports" })
+	private Patient patient;
+
+	@ManyToOne
+	@JoinColumn(name = "doctorId")
+	private Doctor doctor;
+
+	public Report(Long id, String patientName, Doctor doctor, Patient patient, String reportType, String description,
+			String status, LocalDateTime reportDate) {
 		super();
 		this.reportId = id;
 		this.patientName = patientName;
@@ -52,10 +49,10 @@ public class Report {
 		this.description = description;
 		this.status = status;
 		this.reportDate = reportDate;
-		this.patient=patient;
-		this.doctor=doctor;
+		this.patient = patient;
+		this.doctor = doctor;
 	}
-    
+
 	public Report() {
 		// TODO Auto-generated constructor stub
 	}
@@ -115,9 +112,5 @@ public class Report {
 	public void setReportDate(LocalDateTime reportDate) {
 		this.reportDate = reportDate;
 	}
-	
-	
-	
-    
 
 }
