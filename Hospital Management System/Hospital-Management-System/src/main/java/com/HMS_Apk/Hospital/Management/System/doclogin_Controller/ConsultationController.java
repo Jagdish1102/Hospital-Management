@@ -20,34 +20,32 @@ import com.HMS_Apk.Hospital.Management.System.doclogin_Service.ConsultationServi
 @RequestMapping("/api/consultations")
 @CrossOrigin(origins = "*")
 public class ConsultationController {
-	
-	
+
 	@Autowired
 	private ConsultationService consultationService;
-	
-	
-	@PostMapping("/{id}/{doctorid}")
-	public Consultation addConsultation(@PathVariable Long id,@PathVariable Long doctorid,@RequestBody Consultation consultation) {
-		
-		
-		return consultationService.createConsultation(id, doctorid, consultation);
+
+	@PostMapping("/add/{patientId}/{doctorId}")
+	public Consultation addConsultation(@PathVariable Long patientId, @PathVariable Long doctorId,
+			@RequestBody Consultation consultation) {
+
+		return consultationService.createConsultation(doctorId, patientId, consultation);
 	}
-	
+
 	@GetMapping("/patient/{id}")
-	public List<Consultation> getByPatient(@PathVariable Long id){
+	public List<Consultation> getByPatient(@PathVariable Long id) {
 		return consultationService.getConsultationByPatient(id);
 	}
-	
-	 
+
 	@GetMapping("/doctor/{doctorid}")
-	public List<Consultation> getByDoctor(@PathVariable Long doctorid){
+	public List<Consultation> getByDoctor(@PathVariable Long doctorid) {
 		return consultationService.getConsultationByDoctor(doctorid);
 	}
-	
+
 	@GetMapping
-	public List<Consultation> getConsultations(){
+	public List<Consultation> getConsultations() {
 		return consultationService.getAllConsultation();
 	}
+
 //	
 //	@PutMapping("/consultation/{id}")
 //	public ResponseEntity<Consultation> updateConsultation(
@@ -72,6 +70,3 @@ public class ConsultationController {
 //	}
 
 }
-
-
-
