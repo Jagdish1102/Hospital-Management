@@ -27,33 +27,34 @@ public class ConsultationService {
 	private DoctorRepository doctorRepository;
 	@Autowired
 	private PatientRepository patientRepository;
-	
-	
-	public Consultation createConsultation(Long Did,Long Pid,Consultation consultation ) {
-		Doctor doctor = doctorRepository.findById(Did).orElseThrow(()->new RuntimeException("Doctor Not Found"));
-		
-		Patient patient=patientRepository.findById(Pid).orElseThrow(()->new RuntimeException("Patient Not Found"));
-		
-		consultation.setPatient(patient);
-		
-		consultation.setDoctor(doctor);
-		
-		consultation.setConsultationDate(LocalDate.now());
-		return consultationRepository.save(consultation);
-		}
 
-	 public List<Consultation> getConsultationByPatient(Long Pid){
+	public Consultation createConsultation(Long patientId, Long doctorId, Consultation consultation) {
+
+		Patient patient = patientRepository.findById(patientId)
+				.orElseThrow(() -> new RuntimeException("Patient Not Found"));
+
+		Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(() -> new RuntimeException("Doctor Not Found"));
+
+		consultation.setPatient(patient);
+		consultation.setDoctor(doctor);
+
+		consultation.setConsultationDate(LocalDate.now());
+
+		return consultationRepository.save(consultation);
+	}
+
+	public List<Consultation> getConsultationByPatient(Long Pid) {
 		return consultationRepository.findByPatientId(Pid);
 	}
-	
-	 public List<Consultation> getConsultationByDoctor(Long Did){
+
+	public List<Consultation> getConsultationByDoctor(Long Did) {
 		return consultationRepository.findByDoctorId(Did);
 	}
-	 
-	 public List<Consultation> getAllConsultation(){
-		 return consultationRepository.findAll();
-	 }
-	
+
+	public List<Consultation> getAllConsultation() {
+		return consultationRepository.findAll();
+	}
+
 //	 public ResponseEntity<Consultation> updateConsultation(Long Cid,Consultation updateConsultation){
 //		
 //		 Consultation consultation = consultationRepository.findById(Cid).orElseThrow(()->new RuntimeException("Consultation Not Found With id :" + Cid));
