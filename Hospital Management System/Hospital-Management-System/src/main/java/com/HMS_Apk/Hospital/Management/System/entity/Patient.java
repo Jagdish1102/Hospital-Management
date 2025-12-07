@@ -58,6 +58,9 @@ public class Patient {
 
 	@Column(name = "address ")
 	private String address;
+	
+
+
 
 	public Patient() {
 	}
